@@ -52,51 +52,7 @@ namespace Ledsun.Alhambra.Db
         {
             return String;
         }
-
-        #region Test
-        [TestFixture]
-        public class Test
-        {
-            TypeConvertableWrapper _DateTimeData;
-            TypeConvertableWrapper _DecimalData;
-            TypeConvertableWrapper _DoubleData;
-            TypeConvertableWrapper _IntData;
-            TypeConvertableWrapper _StringData;
-            TypeConvertableWrapper _UIntData;
-
-            [SetUp]
-            public void SetUp()
-            {
-                _DateTimeData = new TypeConvertableWrapper(new DateTime(2009, 4, 7));
-                _DecimalData = new TypeConvertableWrapper(new Decimal(123.456));
-                _DoubleData = new TypeConvertableWrapper(456.789d);
-                _IntData = new TypeConvertableWrapper(-100);
-                _StringData = new TypeConvertableWrapper("ABC");
-                _UIntData = new TypeConvertableWrapper(100);
-            }
-
-            [Test]
-            public void プロパティによる型変換()
-            {
-                Assert.That(_DateTimeData.DateTime, Is.EqualTo(new DateTime(2009, 4, 7)));
-                Assert.That(_DecimalData.Decimal, Is.EqualTo(123.456));
-                Assert.That(_DoubleData.Double, Is.EqualTo(456.789));
-                Assert.That(_IntData.Int, Is.EqualTo(-100));
-                Assert.That(_StringData.String, Is.EqualTo("ABC"));
-                Assert.That(_UIntData.UInt, Is.EqualTo(100));
-            }
-
-            [Test]
-            public void ToStringメソッドをオーバーライドしています()
-            {
-                Assert.That(_DateTimeData.ToString(), Is.EqualTo("2009/04/07 0:00:00"));
-                Assert.That(_DecimalData.ToString(), Is.EqualTo("123.456"));
-                Assert.That(_DoubleData.ToString(), Is.EqualTo("456.789"));
-                Assert.That(_StringData.ToString(), Is.EqualTo("ABC"));
-            }
-        }
-        #endregion
-
+       
         #region 型変換をする内部クラス
         //staicクラスですがテストが複雑なため、privateメソッドにせずprivateクラスとしてまとめて分離します。
         private static class To
