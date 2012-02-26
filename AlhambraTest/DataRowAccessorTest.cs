@@ -48,7 +48,7 @@ namespace AlhambraTest
         }
 
         [TestMethod()]
-        public void Columnsプロパティからカラム名の一覧を取得できる()
+        public void Columnsプロパティからカラム名の一覧を取得できます()
         {
             DataColumnCollection actual = _dra.Columns;
             Assert.AreEqual<string>("ID", _dra.Columns[0].ColumnName);
@@ -56,7 +56,7 @@ namespace AlhambraTest
         }
 
         [TestMethod()]
-        public void カラムの名前を指定して要素を取得できる()
+        public void カラムの名前を指定して要素を取得できます()
         {
             var target = _dra["ID"];
 
@@ -66,7 +66,7 @@ namespace AlhambraTest
         }
 
         [TestMethod()]
-        public void カラムのインデックスを指定して要素を取得できる()
+        public void カラムのインデックスを指定して要素を取得できます()
         {
             var target = _dra[0];
 

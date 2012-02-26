@@ -7,39 +7,40 @@ namespace Ledsun.Alhambra.Db
 {
     /// <summary>
     /// 型変換機能を持つヘルパークラス
-    /// DBから取得した値の型変換に使います。
+    /// 引数で取得した値をプロパティで型を指定して任意の型に変換して取得できます。
+    /// 主にDBから取得した値をDataTransferObjectの型に合わせて変換するために使います。
     /// </summary>
     /// <example>
-    /// 型名のプロパティで当該型で取得できます。
+    /// 型名のプロパティで値を当該型に変換して取得できます。
     ///     new TypeConvertableWrapper("1").Int
     /// String型へは暗黙型変換が可能です。
     ///     string hoge = new TypeConvertableWrapper("1");
     /// </example>
     public class TypeConvertableWrapper
     {
-        private readonly Object _rawData;
+        private readonly Object _value;
 
         public TypeConvertableWrapper(object rawData)
         {
-            _rawData = rawData;
+            _value = rawData;
         }
 
         //明示的な型を指定したプロパティ
-        public uint UInt { get { return To.UInt(_rawData); } }
-        public int Int { get { return To.Int(_rawData); } }
-        public Int16 Int16 { get { return To.Int16(_rawData); } }
-        public Int64 Int64 { get { return To.Int64(_rawData); } }
-        public Byte Byte { get { return To.Byte(_rawData); } }
-        public string String { get { return To.String(_rawData); } }
-        public decimal Decimal { get { return To.Decimal(_rawData); } }
-        public DateTime DateTime { get { return To.DateTime(_rawData); } }
-        public double Double { get { return To.Double(_rawData); } }
+        public uint UInt { get { return To.UInt(_value); } }
+        public int Int { get { return To.Int(_value); } }
+        public Int16 Int16 { get { return To.Int16(_value); } }
+        public Int64 Int64 { get { return To.Int64(_value); } }
+        public Byte Byte { get { return To.Byte(_value); } }
+        public string String { get { return To.String(_value); } }
+        public decimal Decimal { get { return To.Decimal(_value); } }
+        public DateTime DateTime { get { return To.DateTime(_value); } }
+        public double Double { get { return To.Double(_value); } }
 
         /// <summary>
         /// 0はFalseそれ以外の数字はTrue
         /// 文字列の場合はTrue、Falseは変換可能（大文字小文字を区別しない）。それ以外は例外を出す。
         /// </summary>
-        public bool Bool { get { return To.Bool(_rawData); } }
+        public bool Bool { get { return To.Bool(_value); } }
 
         //Stringに関しては暗黙の型変換が可能
         public static implicit operator string(TypeConvertableWrapper value)
