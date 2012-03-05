@@ -6,12 +6,6 @@ using NUnit.Framework;
 
 namespace Ledsun.Alhambra.Db
 {
-    //複数のDBを使い分けたくなった場合に、新しいクラスを作って置き換え文字列を変更してください。
-    public class DBSqlStatement : SqlStatement
-    {
-        public DBSqlStatement(string baseSql) : base(baseSql, Config.Value.DBPrefix) { }
-    }
-
     //SQLステートメントを作成するためのクラスです。
     //@で囲んだ文字列を、指定の値に置き換えてくれるReplaceメソッドを提供します。
     //以下のようにしてSQL文字列を作成することができます。

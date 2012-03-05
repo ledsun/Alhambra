@@ -3,7 +3,7 @@ using System.Data.SqlTypes;
 using System.Globalization;
 using NUnit.Framework;
 
-namespace Ledsun.Alhambra.Db
+namespace Ledsun.Alhambra.Db.Data
 {
     /// <summary>
     /// 型変換機能を持つヘルパークラス

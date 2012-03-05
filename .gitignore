@@ -1,2 +1,4 @@
 *.suo
 TestResults/
+bin/
+obj/

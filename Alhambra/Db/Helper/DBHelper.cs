@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-
+using Ledsun.Alhambra.Db.Data;
+using Ledsun.Alhambra.Db.Plugin;
 using NUnit.Framework;
 
-namespace Ledsun.Alhambra.Db
+namespace Ledsun.Alhambra.Db.Helper
 {
     /// <summary>
     /// DBアクセス用のユーティリティクラスです。
@@ -27,48 +28,32 @@ namespace Ledsun.Alhambra.Db
         /// UPDATE,DELETEなどの結果を返さないSQLを実行します。
         /// </summary>
         /// <param name="sql">実行するSQL文字列</param>
-        public static int Execute(string sql, DBHelperWithTransaction tran = null)
+        public static int Execute(string sql, DBTran tran = null)
         {
-            return tran == null ? Execute(sql) : tran.Execute(sql);
+            return tran == null
+                ? DBFactory.NewDB.Execute(sql)
+                : tran.DB.Execute(sql);
         }
 
-        public static List<DataRowAccessor> Select(string sql, DBHelperWithTransaction tran = null)
+        public static List<DataRowAccessor> Select(string sql, DBTran tran = null)
         {
-            return tran == null ? Select(sql) : tran.Select(sql);
+            return tran == null
+                ? DBFactory.NewDB.Select(sql)
+                : tran.DB.Select(sql);
         }
 
-        public static TypeConvertableWrapper SelectOne(string sql, DBHelperWithTransaction tran = null)
+        public static TypeConvertableWrapper SelectOne(string sql, DBTran tran = null)
         {
-            return tran == null ? SelectOne(sql) : tran.SelectOne(sql);
+            return tran == null
+                ? DBFactory.NewDB.SelectOne(sql)
+                : tran.DB.SelectOne(sql);
         }
 
-        public static DataSet SelectDataSet(string sql, DBHelperWithTransaction tran = null)
+        public static DataSet SelectDataSet(string sql, DBTran tran = null)
         {
-            return tran == null ? SelectDataSet(sql) : tran.SelectDataSet(sql);
-        }
-
-        private static int Execute(string sql)
-        {
-            using (var db = new DBBridgeForSqlServer())
-                return db.Execute(sql);
-        }
-
-        private static List<DataRowAccessor> Select(string sql)
-        {
-            using (var db = new DBBridgeForSqlServer())
-                return db.Select(sql);
-        }
-
-        private static TypeConvertableWrapper SelectOne(string sql)
-        {
-            using (var db = new DBBridgeForSqlServer())
-                return db.SelectOne(sql);
-        }
-
-        private static DataSet SelectDataSet(string sql)
-        {
-            using (var db = new DBBridgeForSqlServer())
-                return db.SelectDataSet(sql);
+            return tran == null
+                ? DBFactory.NewDB.SelectDataSet(sql)
+                : tran.DB.SelectDataSet(sql);
         }
 
         #region TEST

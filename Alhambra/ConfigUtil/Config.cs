@@ -4,12 +4,19 @@ using System.Reflection;
 
 namespace Ledsun.Alhambra.ConfigUtil
 {
-    //XXX.Configの設定値を読み取るクラスです。
-    //各プロジェクトごとにConfigクラスを丸ごとコピーし
-    //プロジェクト固有の設定をConfig.ConfigValueクラス内に実装してください。
-    internal class Config
+    /// <summary>
+    /// XXX.Configの設定値を読み取るクラスです。
+    /// Config.Value.DBPrefixという形で値を取得できます。
+    /// プロジェクト固有の設定はConfig.ConfigValueクラスに拡張メソッドを追加すれば同じように行けると思うけど、未検証です。
+    /// </summary>
+    public class Config
     {
+        //ConfigValue継承して実装してるのでインスタンス化が必要です。
         private static ConfigValue value = new ConfigValue();
+
+        /// <summary>
+        /// Config.Value.XXXを静的に参照できるように、静的なプロパティを提供します。
+        /// </summary>
         public static ConfigValue Value
         {
             get { return value; }
@@ -17,34 +24,31 @@ namespace Ledsun.Alhambra.ConfigUtil
 
         public class ConfigValue : ConfigValueBase
         {
-            //プロジェクト固有の設定値はこのクラスのプロパティとして実装します。
-            //public string Sample
-            //{
-            //    get { return GetValueString(MethodBase.GetCurrentMethod().Name.Substring(4)); }
-            //}
-            public string DbConnectionString
+            /// <summary>
+            /// 名前を指定してデータベース接続文字列を取得する。
+            /// プラグインごとにデータベース接続文字列を分けるために使用。
+            /// </summary>
+            /// <param name="name"></param>
+            /// <returns></returns>
+            public string GetConnectionString(string name)
             {
-                get
+                var css = ConfigurationManager.ConnectionStrings[name];
+                if (css != null && !String.IsNullOrEmpty(css.ConnectionString))
                 {
-                    var css = ConfigurationManager.ConnectionStrings["DBHelper"];
-                    if (css != null && !String.IsNullOrEmpty(css.ConnectionString))
-                    {
 
-                        return css.ConnectionString;
-                    }
-                    else
-                    {
-                        throw new ApplicationException("configファイルのConnectionStringにDBHelerの接続文字列を指定して下さい。");
-                    }
+                    return css.ConnectionString;
+                }
+                else
+                {
+                    throw new DBHelperException("configファイルのConnectionStringに" + name + "の接続文字列を指定して下さい。");
                 }
             }
 
-            public string DBPrefix
-            {
-                get { return GetValueString(MethodBase.GetCurrentMethod().Name.Substring(4)); }
-            }
-
-            public int SqlCommandTimeout
+            /// <summary>
+            /// SQL実行タイムアウトを設定します。
+            /// 設定されてなければ30秒を使います。
+            /// </summary>
+            internal int SqlCommandTimeout
             {
                 get
                 {
@@ -52,35 +56,12 @@ namespace Ledsun.Alhambra.ConfigUtil
                     {
                         return GetValueInt(MethodBase.GetCurrentMethod().Name.Substring(4));
                     }
-                    catch
+                    catch (InvalidOperationException)
                     {
                         return 30;
                     }
                 }
             }
         }
-    }
-
-    //共通ライブラリ用の設定値はここに書きます。
-    public class ConfigValueBase
-    {
-        private static AppSettingsReader _reader = new AppSettingsReader();
-
-        #region protected
-        protected string GetValueString(string arg)
-        {
-            return (string)_reader.GetValue(arg, typeof(System.String));
-        }
-
-        protected int GetValueInt(string arg)
-        {
-            return (int)_reader.GetValue(arg, typeof(System.Int32));
-        }
-
-        protected bool GetValueBool(string arg)
-        {
-            return (bool)_reader.GetValue(arg, typeof(System.Boolean));
-        }
-        #endregion
     }
 }
