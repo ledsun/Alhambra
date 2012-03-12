@@ -5,7 +5,7 @@ using Ledsun.Alhambra.Db.Data;
 
 namespace Ledsun.Alhambra.Db.Helper
 {
-   static class DbAdapterExtentions
+   static class DBAdapterExtentions
     {
         internal static List<DataRowAccessor> SelectFromDataAdapter(this IDbDataAdapter adapter)
         {

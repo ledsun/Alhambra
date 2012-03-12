@@ -5,7 +5,7 @@ using Ledsun.Alhambra.Db.Data;
 
 namespace Ledsun.Alhambra.Db.Helper
 {
-    static class DbCommandExtentions
+    static class DBCommandExtentions
     {
         internal static int Execute(this IDbCommand cmd)
         {
