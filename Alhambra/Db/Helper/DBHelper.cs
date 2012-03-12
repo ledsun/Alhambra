@@ -75,7 +75,7 @@ namespace Ledsun.Alhambra.Db.Helper
             }
 
             [Test]
-            [ExpectedException(typeof(ApplicationException))]
+            [ExpectedException(typeof(DBHelperException))]
             public void SelectOne‚Å—áŠO‚ª‚¨‚«‚½‚Æ‚«‚ÍApplicationException‚ª•Ô‚é()
             {
                 DBHelper.SelectOne("x");

@@ -7,6 +7,12 @@ namespace Ledsun.Alhambra.Db.Helper
 {
     static class DBCommandExtentions
     {
+        /// <summary>
+        /// SQLを実行します。
+        /// 影響のあった値を返します。
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
         internal static int Execute(this IDbCommand cmd)
         {
             try
@@ -20,11 +26,16 @@ namespace Ledsun.Alhambra.Db.Helper
             }
         }
 
-        internal static object ExecuteScalar(this IDbCommand cmd)
+        /// <summary>
+        /// SQLを実行して一つの値を返します。
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        internal static TypeConvertableWrapper SelectOne(this IDbCommand cmd)
         {
             try
             {
-                return cmd.ExecuteScalar();
+                return new TypeConvertableWrapper(cmd.ExecuteScalar());
             }
             catch (SystemException e)
             {
@@ -32,6 +43,6 @@ namespace Ledsun.Alhambra.Db.Helper
             }
         }
 
-       
+
     }
 }

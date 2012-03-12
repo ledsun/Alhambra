@@ -92,7 +92,7 @@ namespace Ledsun.Alhambra.Db.Plugin
             if (String.IsNullOrEmpty(sql))
                 throw new ArgumentException(SQL_SHOULD_NOT_NULL_OR_EMPTY);
 
-            return new TypeConvertableWrapper(PrepareCommand(sql).ExecuteScalar());
+            return PrepareCommand(sql).SelectOne();
         }
 
         /// <summary>
