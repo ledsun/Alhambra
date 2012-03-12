@@ -60,9 +60,11 @@
     <Compile Include="DBHelperException.cs" />
     <Compile Include="Db\Data\DataRowAccessor.cs" />
     <Compile Include="Db\Data\TypeConvertableWrapper.cs" />
+    <Compile Include="Db\Helper\DbAdapterExtentions.cs" />
     <Compile Include="Db\Helper\DBHelper.cs" />
+    <Compile Include="Db\Helper\DBHelperException.cs" />
     <Compile Include="Db\Helper\DBTran.cs" />
-    <Compile Include="Db\Helper\DBCommandUtil.cs" />
+    <Compile Include="Db\Helper\DbCommandExtentions.cs" />
     <Compile Include="Db\Plugin\AbstractDBBridge.cs" />
     <Compile Include="Db\Plugin\DBFactory.cs" />
     <Compile Include="Db\SqlStatement.cs" />

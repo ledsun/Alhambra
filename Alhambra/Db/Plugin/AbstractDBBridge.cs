@@ -79,8 +79,7 @@ namespace Ledsun.Alhambra.Db.Plugin
             if (String.IsNullOrEmpty(sql))
                 throw new ArgumentException(SQL_SHOULD_NOT_NULL_OR_EMPTY);
 
-            var cmd = PrepareCommand(sql);
-            return DbCommandUtil.Execute(cmd);
+            return PrepareCommand(sql).Execute();
         }
 
         /// <summary>
@@ -93,8 +92,7 @@ namespace Ledsun.Alhambra.Db.Plugin
             if (String.IsNullOrEmpty(sql))
                 throw new ArgumentException(SQL_SHOULD_NOT_NULL_OR_EMPTY);
 
-            var cmd = PrepareCommand(sql);
-            return new TypeConvertableWrapper(DbCommandUtil.ExecuteScalar(cmd));
+            return new TypeConvertableWrapper(PrepareCommand(sql).ExecuteScalar());
         }
 
         /// <summary>
@@ -108,8 +106,7 @@ namespace Ledsun.Alhambra.Db.Plugin
             if (String.IsNullOrEmpty(sql))
                 throw new ArgumentException(SQL_SHOULD_NOT_NULL_OR_EMPTY);
 
-            var dataAdapter = PrepareDataAdapter(sql);
-            return DbCommandUtil.SelectFromDataAdapter(dataAdapter);
+            return PrepareDataAdapter(sql).SelectFromDataAdapter();
         }
 
         /// <summary>
@@ -123,8 +120,7 @@ namespace Ledsun.Alhambra.Db.Plugin
             if (String.IsNullOrEmpty(sql))
                 throw new ArgumentException(SQL_SHOULD_NOT_NULL_OR_EMPTY);
 
-            var dataAdapter = PrepareDataAdapter(sql);
-            return DbCommandUtil.SelectFromDataAdapterDataSet(dataAdapter);
+            return PrepareDataAdapter(sql).SelectFromDataAdapterDataSet();
         }
         #endregion
 
