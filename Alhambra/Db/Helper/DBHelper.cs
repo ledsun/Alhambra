@@ -35,7 +35,7 @@ namespace Ledsun.Alhambra.Db.Helper
                 : tran.DB.Execute(sql);
         }
 
-        public static List<DataRowAccessor> Select(string sql, DBTran tran = null)
+        public static IEnumerable<DataRowAccessor> Select(string sql, DBTran tran = null)
         {
             return tran == null
                 ? DBFactory.NewDB.Select(sql)
@@ -76,7 +76,7 @@ namespace Ledsun.Alhambra.Db.Helper
 
             [Test]
             [ExpectedException(typeof(DBHelperException))]
-            public void SelectOne‚Å—áŠO‚ª‚¨‚«‚½‚Æ‚«‚ÍApplicationException‚ª•Ô‚é()
+            public void SelectOne‚Å—áŠO‚ª‚¨‚«‚½‚Æ‚«‚ÍDBHelperException‚ª•Ô‚é()
             {
                 DBHelper.SelectOne("x");
             }

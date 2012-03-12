@@ -1,51 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Ledsun.Alhambra.Db.Data;
 
 namespace Ledsun.Alhambra.Db.Helper
 {
-   static class DBAdapterExtentions
+    /// <summary>
+    /// IDbDataAdapterの拡張
+    /// </summary>
+    static class DBAdapterExtentions
     {
-        internal static List<DataRowAccessor> SelectFromDataAdapter(this IDbDataAdapter adapter)
+        /// <summary>
+        /// 取得したDataTable.RowsをIEnumerable{DataRowAccessor}に変換します
+        /// </summary>
+        /// <param name="adapter"></param>
+        /// <returns></returns>
+        internal static IEnumerable<DataRowAccessor> SelectFromDataAdapter(this IDbDataAdapter adapter)
         {
-            return SelectToDataRowList(adapter).ConvertAll<DataRowAccessor>(delegate(DataRow row) { return new DataRowAccessor(row); });
+            using (DataSet ds = new DataSet())
+            {
+                FillDataSet(adapter, ds);
+                return new LinqList<DataRow>(ds.Tables[0].Rows)
+                    .Select(r => new DataRowAccessor(r));
+            }
         }
 
-        internal static DataSet SelectFromDataAdapterDataSet(this IDbDataAdapter adapter)
+        /// <summary>
+        /// DataBindに使えるようにDataSetで取得します。
+        /// </summary>
+        /// <param name="adapter"></param>
+        /// <returns></returns>
+        internal static DataSet SelectDataSetFromDataAdapter(this IDbDataAdapter adapter)
         {
             DataSet ds = new DataSet();
             FillDataSet(adapter, ds);
             return ds;
         }
 
-        //Select結果をDataRowのリストで返却します。
-        //複数テーブルは未対応です。
-        private static List<DataRow> SelectToDataRowList(IDbDataAdapter adapter)
-        {
-            using (DataSet ds = new DataSet())
-            {
-                List<DataRow> ret = new List<DataRow>();
-
-                if (0 >= FillDataSet(adapter, ds))
-                {
-                    return ret;
-                }
-
-                //DataRowCollectionをListに詰め替える。
-                foreach (DataRow row in ds.Tables[0].Rows)
-                {
-                    ret.Add(row);
-                }
-                return ret;
-            }
-        }
-
-        private static int FillDataSet(IDbDataAdapter adapter, DataSet ds)
+        /// <summary>
+        /// 例外が発生した時に、メッセージに実行したSQL文を追加します。
+        /// </summary>
+        /// <param name="adapter"></param>
+        /// <param name="ds"></param>
+        private static void FillDataSet(IDbDataAdapter adapter, DataSet ds)
         {
             try
             {
-                return adapter.Fill(ds);
+                adapter.Fill(ds);
             }
             catch (SystemException e)
             {

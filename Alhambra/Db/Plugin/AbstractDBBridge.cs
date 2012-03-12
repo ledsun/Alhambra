@@ -101,7 +101,7 @@ namespace Ledsun.Alhambra.Db.Plugin
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public List<DataRowAccessor> Select(string sql)
+        public IEnumerable<DataRowAccessor> Select(string sql)
         {
             if (String.IsNullOrEmpty(sql))
                 throw new ArgumentException(SQL_SHOULD_NOT_NULL_OR_EMPTY);
@@ -120,7 +120,7 @@ namespace Ledsun.Alhambra.Db.Plugin
             if (String.IsNullOrEmpty(sql))
                 throw new ArgumentException(SQL_SHOULD_NOT_NULL_OR_EMPTY);
 
-            return PrepareDataAdapter(sql).SelectFromDataAdapterDataSet();
+            return PrepareDataAdapter(sql).SelectDataSetFromDataAdapter();
         }
         #endregion
 

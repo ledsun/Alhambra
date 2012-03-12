@@ -5,6 +5,10 @@ using Ledsun.Alhambra.Db.Data;
 
 namespace Ledsun.Alhambra.Db.Helper
 {
+    /// <summary>
+    /// IDbCommand拡張
+    /// 例外が発生した場合はメッセージに実行したSQLを追加します。
+    /// </summary>
     static class DBCommandExtentions
     {
         /// <summary>
@@ -21,7 +25,6 @@ namespace Ledsun.Alhambra.Db.Helper
             }
             catch (SystemException e)
             {
-
                 throw new DBHelperException(e, cmd);
             }
         }
@@ -42,7 +45,5 @@ namespace Ledsun.Alhambra.Db.Helper
                 throw new DBHelperException(e, cmd);
             }
         }
-
-
     }
 }
