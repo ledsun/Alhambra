@@ -62,7 +62,6 @@
     <Compile Include="Db\Data\TypeConvertableWrapper.cs" />
     <Compile Include="Db\Helper\DBAdapterExtentions.cs" />
     <Compile Include="Db\Helper\DBHelper.cs" />
-    <Compile Include="Db\Helper\DBHelperException.cs" />
     <Compile Include="Db\Helper\DBTran.cs" />
     <Compile Include="Db\Helper\DBCommandExtentions.cs" />
     <Compile Include="Db\Plugin\AbstractDBBridge.cs" />
