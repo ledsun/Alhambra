@@ -13,6 +13,7 @@ namespace Ledsun.Alhambra.Db
     public class SqlStatement
     {
         const string DATABASE = "@DB@";
+        const string DATETIME_FORMAT = "\\'yyyy/MM/dd HH:mm:ss\\'";
         private readonly string _baseSql;
 
         public SqlStatement(string baseSql)
@@ -45,7 +46,13 @@ namespace Ledsun.Alhambra.Db
         {
             //自動初期化された値が指定された場合はNULLにします。
             //DBのdatetime型は指定無しを示す値を取れないためNULLを許可します。
-            string newString = newDate == new DateTime(0) ? "NULL" : newDate.ToString("\\'yyyy/MM/dd HH:mm:ss\\'");
+            var newString = newDate == new DateTime(0) ? "NULL" : newDate.ToString(DATETIME_FORMAT);
+            return ReplaceByAtmark(oldString, newString);
+        }
+
+        public SqlStatement Replace(string oldString, DateTime? newDate)
+        {
+            var newString = !newDate.HasValue ? "NULL" : newDate.Value.ToString(DATETIME_FORMAT);
             return ReplaceByAtmark(oldString, newString);
         }
 
@@ -133,7 +140,7 @@ namespace Ledsun.Alhambra.Db
             //呼び出し元のpublicメソッドで引数がnullかチェックしArgumentNullExceptionを返すべきです。
             //しかし、どのプロジェクトで使われているかわからないのでもう修正しません。
             if (value == null) return "";
-            StringBuilder builder = new StringBuilder(value.Length);
+            var builder = new StringBuilder(value.Length);
             foreach (char c in value)
             {
                 if (c == '\'')

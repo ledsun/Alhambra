@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataRowAccessorTest.cs" />
+    <Compile Include="DateTimeNullTest.cs" />
     <Compile Include="DBHelperTest.cs" />
     <Compile Include="DBTranTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

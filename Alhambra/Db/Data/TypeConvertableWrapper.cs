@@ -20,6 +20,9 @@ namespace Ledsun.Alhambra.Db.Data
     {
         private readonly Object _value;
 
+        //sqlserver compact の制限（1/1/1753 12:00:00 AM から 12/31/9999 11:59:59 PM までの間でなければなりません。）
+        public static DateTime DateTimeDefault = System.DateTime.Parse("1/1/1753 12:00:00");
+
         public TypeConvertableWrapper(object rawData)
         {
             _value = rawData;
@@ -34,6 +37,7 @@ namespace Ledsun.Alhambra.Db.Data
         public string String { get { return To.String(_value); } }
         public decimal Decimal { get { return To.Decimal(_value); } }
         public DateTime DateTime { get { return To.DateTime(_value); } }
+        public DateTime? DateTimeNull { get { return To.DateTimeNull(_value); } }
         public double Double { get { return To.Double(_value); } }
 
         /// <summary>
@@ -52,7 +56,7 @@ namespace Ledsun.Alhambra.Db.Data
         {
             return String;
         }
-       
+
         #region 型変換をする内部クラス
         //staicクラスですがテストが複雑なため、privateメソッドにせずprivateクラスとしてまとめて分離します。
         private static class To
@@ -64,9 +68,21 @@ namespace Ledsun.Alhambra.Db.Data
             /// <returns>nullの場合は0相当の日付値、それ以外は変換された値</returns>
             internal static DateTime DateTime(object val)
             {
-                return IsNull(val) ? System.DateTime.Parse("1/1/1753 12:00:00")//sqlserver compact の制限（1/1/1753 12:00:00 AM から 12/31/9999 11:59:59 PM までの間でなければなりません。）
+                return IsNull(val) ? DateTimeDefault
                     : val is SqlDateTime ? ((SqlDateTime)val).Value
                     : Convert.ToDateTime(val);
+            }
+
+            /// <summary>
+            /// 値を日付に変換する
+            /// </summary>
+            /// <param name="val">変換元の値</param>
+            /// <returns>nullの場合は0相当の日付値、それ以外は変換された値</returns>
+            internal static DateTime? DateTimeNull(object val)
+            {
+                return IsNull(val) ? null
+                    : val is SqlDateTime ? new DateTime?(((SqlDateTime)val).Value)
+                    : new DateTime?(Convert.ToDateTime(val));
             }
 
             /// <summary>
