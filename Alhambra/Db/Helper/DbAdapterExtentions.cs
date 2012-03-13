@@ -18,12 +18,10 @@ namespace Ledsun.Alhambra.Db.Helper
         /// <returns></returns>
         internal static IEnumerable<DataRowAccessor> SelectFromDataAdapter(this IDbDataAdapter adapter)
         {
-            using (DataSet ds = new DataSet())
-            {
-                FillDataSet(adapter, ds);
-                return new LinqList<DataRow>(ds.Tables[0].Rows)
-                    .Select(r => new DataRowAccessor(r));
-            }
+            var ds = new DataSet();
+            FillDataSet(adapter, ds);
+            return new LinqList<DataRow>(ds.Tables[0].Rows)
+                .Select(r => new DataRowAccessor(r));
         }
 
         /// <summary>
@@ -33,7 +31,7 @@ namespace Ledsun.Alhambra.Db.Helper
         /// <returns></returns>
         internal static DataSet SelectDataSetFromDataAdapter(this IDbDataAdapter adapter)
         {
-            DataSet ds = new DataSet();
+            var ds = new DataSet();
             FillDataSet(adapter, ds);
             return ds;
         }
