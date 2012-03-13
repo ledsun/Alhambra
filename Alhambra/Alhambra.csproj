@@ -50,7 +50,7 @@
     <Compile Include="DBHelperException.cs" />
     <Compile Include="Db\Data\DataRowAccessor.cs" />
     <Compile Include="Db\Data\LinqList.cs" />
-    <Compile Include="Db\Data\To.cs" />
+    <Compile Include="Db\Data\ObjectTypeConvertExtentions.cs" />
     <Compile Include="Db\Data\TypeConvertableWrapper.cs" />
     <Compile Include="Db\Helper\DBAdapterExtentions.cs" />
     <Compile Include="Db\Helper\DBHelper.cs" />

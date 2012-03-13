@@ -68,7 +68,7 @@
     <Compile Include="DBTranTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlStatementTest.cs" />
-    <Compile Include="ToTest.cs" />
+    <Compile Include="ObjectTypeConvertExtentionsTest.cs" />
     <Compile Include="TypeConvertableWrapperTest.cs" />
   </ItemGroup>
   <ItemGroup>

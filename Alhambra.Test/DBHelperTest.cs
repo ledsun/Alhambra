@@ -10,7 +10,7 @@ using Ledsun.Alhambra;
 namespace AlhambraTest
 {
     /// <summary>
-    ///DBHelperTest のテスト クラスです。
+    ///DBHelperのテストクラスです。
     ///</summary>
     [TestClass()]
     public class DBHelperTest

@@ -6,8 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AlhambraTest
 {
      /// <summary>
-    ///DBTranTest のテスト クラスです。すべての
-    ///DBTranTest 単体テストをここに含めます
+    ///DBTranのテストクラスです。
     ///</summary>
     [TestClass()]
     public class DBTranTest

@@ -5,7 +5,7 @@ using System;
 namespace AlhambraTest
 {
     /// <summary>
-    ///SqlStatementTest のテスト クラス
+    ///SqlStatementのテストクラス
     ///</summary>
     [TestClass()]
     public class SqlStatementTest
