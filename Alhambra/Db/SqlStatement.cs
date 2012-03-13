@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Ledsun.Alhambra.ConfigUtil;
 using NUnit.Framework;
 
 namespace Ledsun.Alhambra.Db
