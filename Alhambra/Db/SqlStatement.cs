@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
 
 namespace Ledsun.Alhambra.Db
 {
@@ -13,6 +12,7 @@ namespace Ledsun.Alhambra.Db
     {
         const string DATABASE = "@DB@";
         const string DATETIME_FORMAT = "\\'yyyy/MM/dd HH:mm:ss\\'";
+      
         private readonly string _baseSql;
 
         public SqlStatement(string baseSql)
@@ -153,30 +153,6 @@ namespace Ledsun.Alhambra.Db
                 builder.Append(c);
             }
             return builder.ToString();
-        }
-        #endregion
-
-        #region test
-        [TestFixture]
-        public class Test
-        {
-            [Test]
-            public void 配列の置換()
-            {
-                string[] moto = { "aaa", "bbb", "ccc" };
-                Assert.That((String)new SqlStatement("WHERE HAGE IN (@HAGES@)").Replace("HAGES", moto), Is.EqualTo("WHERE HAGE IN ('aaa','bbb','ccc')"));
-
-                long[] moto1 = { 1, 2, 3 };
-                Assert.That((String)new SqlStatement("WHERE HAGE IN (@HAGES@)").Replace("HAGES", moto1), Is.EqualTo("WHERE HAGE IN (1,2,3)"));
-            }
-
-            [Test]
-            public void ToStringのオーバーライド()
-            {
-                Assert.That(new SqlStatement("SELECT 1").ToString(), Is.EqualTo("SELECT 1"));
-                //暗黙的な文字列変換と同じ結果を返します。
-                Assert.That(new SqlStatement("SELECT 1").ToString(), Is.EqualTo((String)new SqlStatement("SELECT 1")));
-            }
         }
         #endregion
     }
