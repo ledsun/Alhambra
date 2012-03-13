@@ -12,7 +12,7 @@ namespace AlhambraTest
     [TestClass()]
     public class DBTranTest
     {
-        [TestMethod()]
+        [TestMethod]
         public void DBTranのテスト()
         {
             using (var tr = new DBTran())

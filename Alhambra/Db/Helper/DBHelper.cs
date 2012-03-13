@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Data;
 using Ledsun.Alhambra.Db.Data;
 using Ledsun.Alhambra.Db.Plugin;
-using NUnit.Framework;
 
 namespace Ledsun.Alhambra.Db.Helper
 {
@@ -55,90 +53,5 @@ namespace Ledsun.Alhambra.Db.Helper
                 ? DBFactory.NewDB.SelectDataSet(sql)
                 : tran.DB.SelectDataSet(sql);
         }
-
-        #region TEST
-        [TestFixture]
-        public class Test
-        {
-            [Test]
-            public void SelectDataSet()
-            {
-                var ds = DBHelper.SelectDataSet("SELECT 3");
-                Assert.That((int)ds.Tables[0].Rows[0][0], Is.EqualTo(3));
-            }
-
-            [Test]
-            public void SelectOne‚ÅDBNull‚ÌŽž‚Í0‚ª•Ô‚é()
-            {
-                var t = DBHelper.SelectOne("SELECT ID FROM ( SELECT 1 ID ) A WHERE ID = 0");
-                Assert.That(t.Int, Is.EqualTo(0));
-            }
-
-            [Test]
-            [ExpectedException(typeof(DBHelperException))]
-            public void SelectOne‚Å—áŠO‚ª‚¨‚«‚½‚Æ‚«‚ÍDBHelperException‚ª•Ô‚é()
-            {
-                DBHelper.SelectOne("x");
-            }
-
-            #region ‹ó•¶Žš‚Ü‚½‚Ínull‚Ì“ü—Í‚Í‹ÖŽ~
-            [Test]
-            [ExpectedException(typeof(ArgumentException))]
-            public void EmptySelect()
-            {
-                DBHelper.Select("");
-            }
-
-            [Test]
-            [ExpectedException(typeof(ArgumentException))]
-            public void NullSelect()
-            {
-                DBHelper.Select(null);
-            }
-
-            [Test]
-            [ExpectedException(typeof(ArgumentException))]
-            public void EmptySelectOne()
-            {
-                DBHelper.SelectOne("");
-            }
-
-            [Test]
-            [ExpectedException(typeof(ArgumentException))]
-            public void NullSelectOne()
-            {
-                DBHelper.SelectOne(null);
-            }
-
-            [Test]
-            [ExpectedException(typeof(ArgumentException))]
-            public void EmptySelectDataSet()
-            {
-                DBHelper.SelectDataSet("");
-            }
-
-            [Test]
-            [ExpectedException(typeof(ArgumentException))]
-            public void NullSelectDataSet()
-            {
-                DBHelper.SelectDataSet(null);
-            }
-
-            [Test]
-            [ExpectedException(typeof(ArgumentException))]
-            public void EmptyExecute()
-            {
-                DBHelper.Execute("");
-            }
-
-            [Test]
-            [ExpectedException(typeof(ArgumentException))]
-            public void NullExecute()
-            {
-                DBHelper.Execute(null);
-            }
-            #endregion
-        }
-        #endregion
     }
 }

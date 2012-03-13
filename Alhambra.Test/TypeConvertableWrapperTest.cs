@@ -40,7 +40,7 @@ namespace AlhambraTest
         #endregion
 
 
-        [TestMethod()]
+        [TestMethod]
         public void オブジェクトを引数にして生成します()
         {
             var target = new TypeConvertableWrapper(new Object());
@@ -48,19 +48,19 @@ namespace AlhambraTest
             Assert.IsInstanceOfType(target, typeof(TypeConvertableWrapper));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ToStringメソッドで値の文字列表現を取得できます()
         {
             Assert.AreEqual<string>("False", _BoolData.ToString());
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void 値の文字列は暗黙変換でも取得できます()
         {
             Assert.AreEqual<string>("False", _BoolData);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void プロパティ名で値の型を指定して変換できます()
         {
             Assert.AreEqual<bool>(false, _BoolData.Bool);

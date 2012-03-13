@@ -4,17 +4,18 @@ using System.Linq;
 using Ledsun.Alhambra.Db.Data;
 using Ledsun.Alhambra.Db.Helper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Data;
+using Ledsun.Alhambra;
 
 namespace AlhambraTest
 {
     /// <summary>
-    ///DBHelperTest のテスト クラスです。すべての
-    ///DBHelperTest 単体テストをここに含めます
+    ///DBHelperTest のテスト クラスです。
     ///</summary>
     [TestClass()]
     public class DBHelperTest
     {
-        [TestMethod()]
+        [TestMethod]
         public void Selectのテスト()
         {
             var target = DBHelper.Select("SELECT 1");
@@ -22,11 +23,81 @@ namespace AlhambraTest
             Assert.AreEqual<String>("1", target.ToList()[0][0]);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void 取得行数が0()
         {
             var target = DBHelper.Select("SELECT 1 WHERE 1<>1");
             Assert.AreEqual<int>(0, target.Count());
         }
+
+        [TestMethod]
+        public void SelectDataSet()
+        {
+            var ds = DBHelper.SelectDataSet("SELECT 3");
+            Assert.AreEqual<int>(3, (int)ds.Tables[0].Rows[0][0]);
+        }
+
+        [TestMethod]
+        public void SelectOneでDBNullの時は0が返る()
+        {
+            var t = DBHelper.SelectOne("SELECT ID FROM ( SELECT 1 ID ) A WHERE ID = 0");
+            Assert.AreEqual<int>(0, t.Int);
+        }
+
+        [TestMethod, ExpectedException(typeof(DBHelperException))]
+        public void SelectOneで例外がおきたときはDBHelperExceptionが返る()
+        {
+            DBHelper.SelectOne("x");
+        }
+
+        #region 空文字またはnullの入力は禁止
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void EmptySelect()
+        {
+            DBHelper.Select("");
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void NullSelect()
+        {
+            DBHelper.Select(null);
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void EmptySelectOne()
+        {
+            DBHelper.SelectOne("");
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void NullSelectOne()
+        {
+            DBHelper.SelectOne(null);
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void EmptySelectDataSet()
+        {
+            DBHelper.SelectDataSet("");
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void NullSelectDataSet()
+        {
+            DBHelper.SelectDataSet(null);
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void EmptyExecute()
+        {
+            DBHelper.Execute("");
+        }
+
+        [TestMethod, ExpectedException(typeof(ArgumentException))]
+        public void NullExecute()
+        {
+            DBHelper.Execute(null);
+        }
+        #endregion
     }
 }

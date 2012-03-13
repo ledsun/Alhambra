@@ -31,7 +31,7 @@ namespace AlhambraTest
   
         #endregion
 
-        [TestMethod()]
+        [TestMethod]
         public void DataRowオブジェクトを引数にして生成します()
         {
             DataTable table = new DataTable();
@@ -48,7 +48,7 @@ namespace AlhambraTest
             Assert.IsInstanceOfType(target, typeof(DataRowAccessor));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Columnsプロパティからカラム名の一覧を取得できます()
         {
             DataColumnCollection actual = _dra.Columns;
@@ -56,7 +56,7 @@ namespace AlhambraTest
             Assert.AreEqual<string>("VALUE", _dra.Columns[1].ColumnName);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void カラムの名前を指定して要素を取得できます()
         {
             var target = _dra["ID"];
@@ -66,7 +66,7 @@ namespace AlhambraTest
             Assert.AreEqual<int>(100, target.Int);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void カラムのインデックスを指定して要素を取得できます()
         {
             var target = _dra[0];
@@ -82,7 +82,7 @@ namespace AlhambraTest
             var target = _dra["NO_COLUMN"];
         }
 
-        [TestMethod(), ExpectedException(typeof(IndexOutOfRangeException))]
+        [TestMethod, ExpectedException(typeof(IndexOutOfRangeException))]
         public void インデックスが間違っていると例外を上げます()
         {
             var target = _dra[2];
