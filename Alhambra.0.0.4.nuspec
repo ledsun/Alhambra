@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
     <authors>ledsun</authors>
     <owners />
     <licenseUrl>http://www.opensource.org/licenses/MIT</licenseUrl>
@@ -16,7 +16,7 @@
     <summary>Alhambra is DBHelper, but Not O/R Mapper.</summary>
   </metadata>
   <files>
-    <file src="..\Alhambra\Alhambra\bin\Release\Alhambra.dll" target="lib\Alhambra.dll" />
-    <file src="..\Alhambra\Alhambra\bin\Release\Plugins\Alhambra.Plugin.SqlServer.dll" target="Plugins\Alhambra.Plugin.SqlServer.dll" />
+    <file src="Alhambra\bin\Release\Plugins\Alhambra.Plugin.SqlServer.dll" target="content\Plugins\Alhambra.Plugin.SqlServer.dll" />
+    <file src="Alhambra\bin\Release\Alhambra.dll" target="lib\Alhambra.dll" />
   </files>
 </package>
