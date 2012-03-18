@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ObjectTypeConvertExtentions">
+      <HintPath>..\packages\ObjectTypeConvertExtentions.0.0.1\lib\ObjectTypeConvertExtentions.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.configuration" />
@@ -50,7 +53,6 @@
     <Compile Include="DBHelperException.cs" />
     <Compile Include="Db\Data\DataRowAccessor.cs" />
     <Compile Include="Db\Data\LinqList.cs" />
-    <Compile Include="Db\Data\ObjectTypeConvertExtentions.cs" />
     <Compile Include="Db\Data\TypeConvertableWrapper.cs" />
     <Compile Include="Db\Helper\DBAdapterExtentions.cs" />
     <Compile Include="Db\Helper\DBHelper.cs" />
@@ -65,6 +67,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Plugins\Alhambra.Plugin.SqlServer.dll">
