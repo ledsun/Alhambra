@@ -1,4 +1,5 @@
 using System;
+using Ledsun.ObjectTypeConvertExtentions;
 
 namespace Ledsun.Alhambra.Db.Data
 {
@@ -17,7 +18,7 @@ namespace Ledsun.Alhambra.Db.Data
     {
         private readonly Object _value;
 
-        public static DateTime DateTimeDefault = ObjectTypeConvertExtentions.DateTimeDefault;
+        public static DateTime DateTimeDefault = Ledsun.ObjectTypeConvertExtentions.ObjectTypeConvertExtentions.DateTimeDefault;
 
         public TypeConvertableWrapper(object rawData)
         {

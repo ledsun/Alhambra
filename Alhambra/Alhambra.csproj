@@ -32,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ObjectTypeConvertExtentions">
-      <HintPath>..\packages\ObjectTypeConvertExtentions.0.0.1\lib\ObjectTypeConvertExtentions.dll</HintPath>
+    <Reference Include="ObjectTypeConvertExtentions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ObjectTypeConvertExtentions.0.0.3\lib\ObjectTypeConvertExtentions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
