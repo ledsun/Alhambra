@@ -113,8 +113,8 @@ namespace Ledsun.Alhambra.Db
                     }
                     else if (val is DateTime)
                     {
-                        var hoge = val as DateTime?;
-                        return DateTimeToString(hoge.Value);
+                        var date = val as DateTime?;
+                        return DateTimeToString(date.Value);
                     }
                     else
                     {
