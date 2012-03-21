@@ -11,126 +11,164 @@ namespace Ledsun.Alhambra.Db
     // new SqlStatement("SELECT * FROM TABLE WHERE ID = @ID@").Replace("ID", 100).ToString();
     public class SqlStatement
     {
-        const string DATABASE = "@DB@";
-        const string DATETIME_FORMAT = "\\'yyyy/MM/dd HH:mm:ss\\'";
+        private const string SQL_DATETIME_FORMAT = "\\'yyyy/MM/dd HH:mm:ss\\'";
         private readonly string _baseSql;
 
+        /// <summary>
+        /// コンストラクタ
+        /// 元になる文字列を指定します。
+        /// </summary>
+        /// <example>new SqlStatement("SELECT * FROM TABLE WHERE ID = @ID@")</example>
+        /// <param name="baseSql"></param>
         public SqlStatement(string baseSql)
         {
+            if (string.IsNullOrEmpty(baseSql))
+            {
+                throw new ArgumentException("baseSql");
+            }
+
             _baseSql = (string)baseSql.Clone();
         }
 
-        public SqlStatement(string baseSql, string dbName)
-            : this(baseSql)
-        {
-            _baseSql = _baseSql.Replace(DATABASE, dbName);
-        }
-
-        public SqlStatement Replace(string oldString, bool newValue)
-        {
-            return ReplaceByAtmark(oldString, newValue ? "1" : "0");
-        }
-
-        public SqlStatement Replace(string oldString, int newValue)
-        {
-            return ReplaceByAtmark(oldString, newValue.ToString());
-        }
-
-        public SqlStatement Replace(string oldString, Decimal newValue)
-        {
-            return ReplaceByAtmark(oldString, newValue.ToString());
-        }
-
-        public SqlStatement Replace(string oldString, Decimal? newValue)
-        {
-            var newString = !newValue.HasValue ? "NULL" : newValue.Value.ToString();
-            return ReplaceByAtmark(oldString, newString);
-        }
-
-        public SqlStatement Replace(string oldString, DateTime newDate)
-        {
-            //自動初期化された値が指定された場合はNULLにします。
-            //DBのdatetime型は指定無しを示す値を取れないためNULLを許可します。
-            var newString = newDate == new DateTime(0) ? "NULL" : newDate.ToString(DATETIME_FORMAT);
-            return ReplaceByAtmark(oldString, newString);
-        }
-
-        public SqlStatement Replace(string oldString, DateTime? newDate)
-        {
-            var newString = !newDate.HasValue ? "NULL" : newDate.Value.ToString(DATETIME_FORMAT);
-            return ReplaceByAtmark(oldString, newString);
-        }
-
-        public SqlStatement Replace(string oldString, IEnumerable<string> newStrings)
-        {
-            if (string.IsNullOrEmpty(oldString))
-            {
-                throw new ArgumentException("oldString");
-            }
-
-            if (newStrings == null)
-            {
-                throw new ArgumentNullException("newStrings");
-            }
-
-            if (newStrings.Any())
-            {
-                var newString = "";
-                foreach (string str in newStrings)
-                {
-                    newString += "'" + Sanitize(str) + "',";
-                }
-
-                return ReplaceByAtmark(oldString, CutLastChar(newString));
-            }
-
-            throw new ArgumentException("newStrings");
-        }
-
-        public SqlStatement Replace(string oldString, IEnumerable<long> newStrings)
-        {
-            if (string.IsNullOrEmpty(oldString))
-            {
-                throw new ArgumentException("oldString");
-            }
-
-            if (newStrings == null)
-            {
-                throw new ArgumentNullException("newStrings");
-            }
-
-            if (newStrings.Any())
-            {
-                var newString = "";
-                foreach (long l in newStrings)
-                {
-                    newString += l.ToString() + ",";
-                }
-
-                return ReplaceByAtmark(oldString, CutLastChar(newString));
-            }
-
-            throw new ArgumentException("newStrings");
-        }
-
-        private static string CutLastChar(string val)
-        {
-            return val.Length > 0 ? "(" + val.Remove(val.Length - 1) + ")" : val;
-        }
-
-        //シングルクォートで囲む版
+        /// <summary>
+        /// 文字列型の置換
+        /// シングルクォートで囲みます。
+        /// </summary>
+        /// <param name="oldString"></param>
+        /// <param name="newString"></param>
+        /// <returns></returns>
         public SqlStatement Replace(string oldString, string newString)
         {
-            return ReplaceByAtmark(oldString, "N'" + Sanitize(newString) + "'");
+            if (string.IsNullOrEmpty(oldString))
+            {
+                throw new ArgumentException("oldString");
+            }
+
+            if (string.IsNullOrEmpty(newString))
+            {
+                throw new ArgumentException("newString");
+            }
+
+            return ReplaceByAtmark(oldString, StringToString(newString));
         }
 
+        /// <summary>
+        /// 値型を置き換えます
+        /// </summary>
+        /// <param name="oldString"></param>
+        /// <param name="newValue"></param>
+        /// <returns></returns>
+        public SqlStatement Replace<T>(string oldString, T newValue) where T : struct
+        {
+            if (string.IsNullOrEmpty(oldString))
+            {
+                throw new ArgumentException("oldString");
+            }
+
+            return ReplaceByAtmark(oldString, ToValue(newValue));
+        }
+
+        /// <summary>
+        /// 値型（ヌル許容）を置き換えます
+        /// </summary>
+        /// <param name="oldString"></param>
+        /// <param name="newValue"></param>
+        /// <returns></returns>
+        public SqlStatement Replace<T>(string oldString, T? newValue) where T : struct
+        {
+            if (string.IsNullOrEmpty(oldString))
+            {
+                throw new ArgumentException("oldString");
+            }
+
+            return ReplaceByAtmark(oldString, NullToValue(newValue));
+        }
+
+        /// <summary>
+        /// IN句用複数値置換
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="oldString"></param>
+        /// <param name="newValues"></param>
+        /// <returns></returns>
+        public SqlStatement ReplaceIn<T>(string oldString, IEnumerable<T> newValues)
+        {
+            if (string.IsNullOrEmpty(oldString))
+            {
+                throw new ArgumentException("oldString");
+            }
+
+            if (newValues == null)
+            {
+                throw new ArgumentNullException("newStrings");
+            }
+
+            if (newValues.Any())
+            {
+                var strs = newValues.Select(val =>
+                {
+                    if (val is string)
+                    {
+                        return StringToString(val.ToString());
+                    }
+                    else if (val is DateTime)
+                    {
+                        var hoge = val as DateTime?;
+                        return DateTimeToString(hoge.Value);
+                    }
+                    else
+                    {
+                        return val.ToString();
+                    }
+                });
+
+                return ReplaceByAtmark(oldString, "(" + string.Join(",", strs) + ")");
+            }
+
+            throw new ArgumentException("newStrings");
+        }
+
+        /// <summary>
+        /// 部分一致置換
+        /// %%で囲みます
+        /// </summary>
+        /// <param name="oldString"></param>
+        /// <param name="newString"></param>
+        /// <returns></returns>
         public SqlStatement ReplaceForPartialMatchRetrieval(string oldString, string newString)
         {
+            if (string.IsNullOrEmpty(oldString))
+            {
+                throw new ArgumentException("oldString");
+            }
+
+            if (string.IsNullOrEmpty(newString))
+            {
+                throw new ArgumentException("newString");
+            }
+
             return ReplaceByAtmark(oldString, "'%" + Sanitize(newString) + "%'");
         }
 
+        /// <summary>
+        /// 文字列だがシングルクォートで囲まない
+        /// DB名、テーブル名の置換に必要
+        /// </summary>
+        /// <param name="oldString"></param>
+        /// <param name="newString"></param>
+        /// <returns></returns>
         public SqlStatement ReplaceStripString(string oldString, string newString)
         {
+            if (string.IsNullOrEmpty(oldString))
+            {
+                throw new ArgumentException("oldString");
+            }
+
+            if (string.IsNullOrEmpty(newString))
+            {
+                throw new ArgumentException("newString");
+            }
+
             return ReplaceByAtmark(oldString, Sanitize(newString));
         }
 
@@ -158,6 +196,61 @@ namespace Ledsun.Alhambra.Db
         #endregion
 
         #region private_method
+        /// <summary>
+        /// NULL許容型を値に変換します。
+        /// nullが来たらNULLにします。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="newValue"></param>
+        /// <returns></returns>
+        private static string NullToValue<T>(T? newValue) where T : struct
+        {
+            if (!newValue.HasValue)
+            {
+                return "NULL";
+            }
+
+            return ToValue<T>(newValue.Value);
+        }
+
+        private static string ToValue<T>(T newValue) where T : struct
+        {
+            var boo = newValue as bool?;
+            if (boo != null)
+            {
+                return BoolToString(boo.Value);
+            }
+
+            var date = newValue as DateTime?;
+            if (date != null)
+            {
+                return DateTimeToString(date.Value);
+            }
+
+            return newValue.ToString();
+        }
+
+        private static string BoolToString(bool boo)
+        {
+            return boo ? "1" : "0";
+        }
+
+        private static string DateTimeToString(DateTime date)
+        {
+            return date.ToString(SQL_DATETIME_FORMAT);
+        }
+
+        private string StringToString(string newString)
+        {
+            return "N'" + Sanitize(newString) + "'";
+        }
+
+        /// <summary>
+        /// 単純に文字列を置き換えます。
+        /// </summary>
+        /// <param name="oldString"></param>
+        /// <param name="newString"></param>
+        /// <returns></returns>
         private SqlStatement ReplaceByAtmark(string oldString, string newString)
         {
             return new SqlStatement(_baseSql.Replace("@" + oldString + "@", newString));
@@ -171,10 +264,12 @@ namespace Ledsun.Alhambra.Db
         /// <returns></returns>
         private string Sanitize(string value)
         {
-            //ここでnullを空文字に置き換えるのはおかしいです。
-            //呼び出し元のpublicメソッドで引数がnullかチェックしArgumentNullExceptionを返すべきです。
-            //しかし、どのプロジェクトで使われているかわからないのでもう修正しません。
-            if (value == null) return "";
+            //IEnumerableの要素にnullが入っていた場合はチェックできないので、ここでnullを空文字に置き換えます
+            if (String.IsNullOrEmpty(value))
+            {
+                return "";
+            }
+
             var builder = new StringBuilder(value.Length);
             foreach (char c in value)
             {
