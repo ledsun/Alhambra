@@ -107,14 +107,21 @@ namespace Ledsun.Alhambra.Db
             {
                 var strs = newValues.Select(val =>
                 {
-                    if (val is string)
+                    if (val == null)
                     {
-                        return StringToString(val.ToString());
+                        return "NULL";
                     }
-                    else if (val is DateTime)
+                    else if (typeof(T) == typeof(string))
                     {
-                        var date = val as DateTime?;
-                        return DateTimeToString(date.Value);
+                        return StringToString((string)(object)val);
+                    }
+                    else if (typeof(T) == typeof(bool))
+                    {
+                        return BoolToString((bool)(object)val);
+                    }
+                    else if (typeof(T) == typeof(DateTime))
+                    {
+                        return DateTimeToString((DateTime)(object)val);
                     }
                     else
                     {
@@ -215,34 +222,32 @@ namespace Ledsun.Alhambra.Db
 
         private static string ToValue<T>(T newValue) where T : struct
         {
-            var boo = newValue as bool?;
-            if (boo != null)
+            if (typeof(T) == typeof(bool))
             {
-                return BoolToString(boo.Value);
+                return BoolToString((bool)(object)newValue);
             }
 
-            var date = newValue as DateTime?;
-            if (date != null)
+            if (typeof(T) == typeof(DateTime))
             {
-                return DateTimeToString(date.Value);
+                return DateTimeToString((DateTime)(object)newValue);
             }
 
             return newValue.ToString();
         }
 
-        private static string BoolToString(bool boo)
+        private static string BoolToString(bool val)
         {
-            return boo ? "1" : "0";
+            return val ? "1" : "0";
         }
 
-        private static string DateTimeToString(DateTime date)
+        private static string DateTimeToString(DateTime val)
         {
-            return date.ToString(SQL_DATETIME_FORMAT);
+            return val.ToString(SQL_DATETIME_FORMAT);
         }
 
-        private string StringToString(string newString)
+        private string StringToString(string val)
         {
-            return "N'" + Sanitize(newString) + "'";
+            return "N'" + Sanitize(val) + "'";
         }
 
         /// <summary>

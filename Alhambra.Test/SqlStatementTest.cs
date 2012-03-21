@@ -49,10 +49,13 @@ namespace AlhambraTest
             var moto1 = new int[] { 1, 2, 3 };
             Assert.AreEqual<string>("WHERE HAGE IN (1,2,3)", new SqlStatement("WHERE HAGE IN @HAGES@").ReplaceIn("HAGES", moto1));
 
+            //真理値
+            var moto2 = new bool[] { true, false };
+            Assert.AreEqual<string>("WHERE HAGE IN (1,0)", new SqlStatement("WHERE HAGE IN @HAGES@").ReplaceIn("HAGES", moto2));
+
             //日付
             var moto3 = new DateTime[] { new DateTime(2001, 1, 1), new DateTime(2001, 2, 1), new DateTime(2001, 12, 31) };
             Assert.AreEqual<string>("WHERE HAGE IN ('2001/01/01 00:00:00','2001/02/01 00:00:00','2001/12/31 00:00:00')", new SqlStatement("WHERE HAGE IN @HAGES@").ReplaceIn("HAGES", moto3));
-
         }
 
         [TestMethod]
