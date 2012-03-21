@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Ledsun.Alhambra.Db
@@ -12,7 +13,6 @@ namespace Ledsun.Alhambra.Db
     {
         const string DATABASE = "@DB@";
         const string DATETIME_FORMAT = "\\'yyyy/MM/dd HH:mm:ss\\'";
-      
         private readonly string _baseSql;
 
         public SqlStatement(string baseSql)
@@ -41,6 +41,12 @@ namespace Ledsun.Alhambra.Db
             return ReplaceByAtmark(oldString, newValue.ToString());
         }
 
+        public SqlStatement Replace(string oldString, Decimal? newValue)
+        {
+            var newString = !newValue.HasValue ? "NULL" : newValue.Value.ToString();
+            return ReplaceByAtmark(oldString, newString);
+        }
+
         public SqlStatement Replace(string oldString, DateTime newDate)
         {
             //自動初期化された値が指定された場合はNULLにします。
@@ -57,29 +63,59 @@ namespace Ledsun.Alhambra.Db
 
         public SqlStatement Replace(string oldString, IEnumerable<string> newStrings)
         {
-            var newString = "";
-            foreach (string str in newStrings)
+            if (string.IsNullOrEmpty(oldString))
             {
-                newString += "'" + Sanitize(str) + "',";
+                throw new ArgumentException("oldString");
             }
 
-            return ReplaceByAtmark(oldString, CutLastChar(newString));
+            if (newStrings == null)
+            {
+                throw new ArgumentNullException("newStrings");
+            }
+
+            if (newStrings.Any())
+            {
+                var newString = "";
+                foreach (string str in newStrings)
+                {
+                    newString += "'" + Sanitize(str) + "',";
+                }
+
+                return ReplaceByAtmark(oldString, CutLastChar(newString));
+            }
+
+            throw new ArgumentException("newStrings");
         }
 
         public SqlStatement Replace(string oldString, IEnumerable<long> newStrings)
         {
-            var newString = "";
-            foreach (long l in newStrings)
+            if (string.IsNullOrEmpty(oldString))
             {
-                newString += l.ToString() + ",";
+                throw new ArgumentException("oldString");
             }
 
-            return ReplaceByAtmark(oldString, CutLastChar(newString));
+            if (newStrings == null)
+            {
+                throw new ArgumentNullException("newStrings");
+            }
+
+            if (newStrings.Any())
+            {
+                var newString = "";
+                foreach (long l in newStrings)
+                {
+                    newString += l.ToString() + ",";
+                }
+
+                return ReplaceByAtmark(oldString, CutLastChar(newString));
+            }
+
+            throw new ArgumentException("newStrings");
         }
 
         private static string CutLastChar(string val)
         {
-            return val.Length > 0 ? val.Remove(val.Length - 1) : val;
+            return val.Length > 0 ? "(" + val.Remove(val.Length - 1) + ")" : val;
         }
 
         //シングルクォートで囲む版
