@@ -34,73 +34,74 @@ namespace Ledsun.Alhambra.Db
         /// 文字列型の置換
         /// シングルクォートで囲みます。
         /// </summary>
-        /// <param name="oldString"></param>
-        /// <param name="newString"></param>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
         /// <returns></returns>
-        public SqlStatement Replace(string oldString, string newString)
+        public SqlStatement Replace(string oldValue, string newValue)
         {
-            if (string.IsNullOrEmpty(oldString))
+            if (string.IsNullOrEmpty(oldValue))
             {
-                throw new ArgumentException("oldString");
+                throw new ArgumentException("oldValue");
             }
 
-            if (string.IsNullOrEmpty(newString))
+            if (string.IsNullOrEmpty(newValue))
             {
-                throw new ArgumentException("newString");
+                throw new ArgumentException("newValue");
             }
 
-            return ReplaceByAtmark(oldString, StringToString(newString));
+            return ReplaceByAtmark(oldValue, StringToString(newValue));
         }
+
 
         /// <summary>
         /// 値型を置き換えます
         /// </summary>
-        /// <param name="oldString"></param>
+        /// <param name="oldValue"></param>
         /// <param name="newValue"></param>
         /// <returns></returns>
-        public SqlStatement Replace<T>(string oldString, T newValue) where T : struct
+        public SqlStatement Replace<T>(string oldValue, T newValue) where T : struct
         {
-            if (string.IsNullOrEmpty(oldString))
+            if (string.IsNullOrEmpty(oldValue))
             {
-                throw new ArgumentException("oldString");
+                throw new ArgumentException("oldValue");
             }
 
-            return ReplaceByAtmark(oldString, ToValue(newValue));
+            return ReplaceByAtmark(oldValue, ToValue(newValue));
         }
 
         /// <summary>
         /// 値型（ヌル許容）を置き換えます
         /// </summary>
-        /// <param name="oldString"></param>
+        /// <param name="oldValue"></param>
         /// <param name="newValue"></param>
         /// <returns></returns>
-        public SqlStatement Replace<T>(string oldString, T? newValue) where T : struct
+        public SqlStatement Replace<T>(string oldValue, T? newValue) where T : struct
         {
-            if (string.IsNullOrEmpty(oldString))
+            if (string.IsNullOrEmpty(oldValue))
             {
-                throw new ArgumentException("oldString");
+                throw new ArgumentException("oldValue");
             }
 
-            return ReplaceByAtmark(oldString, NullToValue(newValue));
+            return ReplaceByAtmark(oldValue, NullToValue(newValue));
         }
 
         /// <summary>
         /// IN句用複数値置換
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="oldString"></param>
+        /// <param name="oldValue"></param>
         /// <param name="newValues"></param>
         /// <returns></returns>
-        public SqlStatement ReplaceIn<T>(string oldString, IEnumerable<T> newValues)
+        public SqlStatement ReplaceIn<T>(string oldValue, IEnumerable<T> newValues)
         {
-            if (string.IsNullOrEmpty(oldString))
+            if (string.IsNullOrEmpty(oldValue))
             {
-                throw new ArgumentException("oldString");
+                throw new ArgumentException("oldValue");
             }
 
             if (newValues == null)
             {
-                throw new ArgumentNullException("newStrings");
+                throw new ArgumentNullException("newValues");
             }
 
             if (newValues.Any())
@@ -129,7 +130,7 @@ namespace Ledsun.Alhambra.Db
                     }
                 });
 
-                return ReplaceByAtmark(oldString, "(" + string.Join(",", strs) + ")");
+                return ReplaceByAtmark(oldValue, "(" + string.Join(",", strs) + ")");
             }
 
             throw new ArgumentException("newStrings");
@@ -139,44 +140,44 @@ namespace Ledsun.Alhambra.Db
         /// 部分一致置換
         /// %%で囲みます
         /// </summary>
-        /// <param name="oldString"></param>
-        /// <param name="newString"></param>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
         /// <returns></returns>
-        public SqlStatement ReplaceForPartialMatchRetrieval(string oldString, string newString)
+        public SqlStatement ReplaceForPartialMatchRetrieval(string oldValue, string newValue)
         {
-            if (string.IsNullOrEmpty(oldString))
+            if (string.IsNullOrEmpty(oldValue))
             {
-                throw new ArgumentException("oldString");
+                throw new ArgumentException("oldValue");
             }
 
-            if (string.IsNullOrEmpty(newString))
+            if (string.IsNullOrEmpty(newValue))
             {
-                throw new ArgumentException("newString");
+                throw new ArgumentException("newValue");
             }
 
-            return ReplaceByAtmark(oldString, "'%" + Sanitize(newString) + "%'");
+            return ReplaceByAtmark(oldValue, "'%" + Sanitize(newValue) + "%'");
         }
 
         /// <summary>
         /// 文字列だがシングルクォートで囲まない
         /// DB名、テーブル名の置換に必要
         /// </summary>
-        /// <param name="oldString"></param>
-        /// <param name="newString"></param>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
         /// <returns></returns>
-        public SqlStatement ReplaceStripString(string oldString, string newString)
+        public SqlStatement ReplaceStripString(string oldValue, string newValue)
         {
-            if (string.IsNullOrEmpty(oldString))
+            if (string.IsNullOrEmpty(oldValue))
             {
                 throw new ArgumentException("oldString");
             }
 
-            if (string.IsNullOrEmpty(newString))
+            if (string.IsNullOrEmpty(newValue))
             {
                 throw new ArgumentException("newString");
             }
 
-            return ReplaceByAtmark(oldString, Sanitize(newString));
+            return ReplaceByAtmark(oldValue, Sanitize(newValue));
         }
 
         #region 文字列変換
@@ -253,12 +254,12 @@ namespace Ledsun.Alhambra.Db
         /// <summary>
         /// 単純に文字列を置き換えます。
         /// </summary>
-        /// <param name="oldString"></param>
-        /// <param name="newString"></param>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
         /// <returns></returns>
-        private SqlStatement ReplaceByAtmark(string oldString, string newString)
+        private SqlStatement ReplaceByAtmark(string oldValue, string newValue)
         {
-            return new SqlStatement(_baseSql.Replace("@" + oldString + "@", newString));
+            return new SqlStatement(_baseSql.Replace("@" + oldValue + "@", newValue));
         }
 
         /// <summary>
