@@ -52,14 +52,14 @@ namespace Ledsun.Alhambra.Db
             return ReplaceByAtmark(oldValue, StringToString(newValue));
         }
 
-
+        #region 値型の置換
         /// <summary>
-        /// 値型を置き換えます
+        /// 真理値型を置き換えます
         /// </summary>
         /// <param name="oldValue"></param>
         /// <param name="newValue"></param>
         /// <returns></returns>
-        public SqlStatement Replace<T>(string oldValue, T newValue) where T : struct
+        public SqlStatement Replace(string oldValue, bool newValue)
         {
             if (string.IsNullOrEmpty(oldValue))
             {
@@ -68,6 +68,55 @@ namespace Ledsun.Alhambra.Db
 
             return ReplaceByAtmark(oldValue, ToValue(newValue));
         }
+
+        /// <summary>
+        /// 整数型を置き換えます
+        /// </summary>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
+        /// <returns></returns>
+        public SqlStatement Replace(string oldValue, int newValue)
+        {
+            if (string.IsNullOrEmpty(oldValue))
+            {
+                throw new ArgumentException("oldValue");
+            }
+
+            return ReplaceByAtmark(oldValue, ToValue(newValue));
+        }
+
+        /// <summary>
+        /// 小数点型を置き換えます
+        /// </summary>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
+        /// <returns></returns>
+        public SqlStatement Replace(string oldValue, decimal newValue)
+        {
+            if (string.IsNullOrEmpty(oldValue))
+            {
+                throw new ArgumentException("oldValue");
+            }
+
+            return ReplaceByAtmark(oldValue, ToValue(newValue));
+        }
+
+        /// <summary>
+        /// 日付型を置き換えます
+        /// </summary>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
+        /// <returns></returns>
+        public SqlStatement Replace(string oldValue, DateTime newValue)
+        {
+            if (string.IsNullOrEmpty(oldValue))
+            {
+                throw new ArgumentException("oldValue");
+            }
+
+            return ReplaceByAtmark(oldValue, ToValue(newValue));
+        }
+        #endregion
 
         /// <summary>
         /// 値型（ヌル許容）を置き換えます
@@ -92,7 +141,7 @@ namespace Ledsun.Alhambra.Db
         /// <param name="oldValue"></param>
         /// <param name="newValues"></param>
         /// <returns></returns>
-        public SqlStatement ReplaceIn<T>(string oldValue, IEnumerable<T> newValues)
+        public SqlStatement Replace<T>(string oldValue, IEnumerable<T> newValues)
         {
             if (string.IsNullOrEmpty(oldValue))
             {
@@ -143,7 +192,7 @@ namespace Ledsun.Alhambra.Db
         /// <param name="oldValue"></param>
         /// <param name="newValue"></param>
         /// <returns></returns>
-        public SqlStatement ReplaceForPartialMatchRetrieval(string oldValue, string newValue)
+        public SqlStatement ReplaceForPartialMatch(string oldValue, string newValue)
         {
             if (string.IsNullOrEmpty(oldValue))
             {
@@ -209,31 +258,31 @@ namespace Ledsun.Alhambra.Db
         /// nullが来たらNULLにします。
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="newValue"></param>
+        /// <param name="nullValue"></param>
         /// <returns></returns>
-        private static string NullToValue<T>(T? newValue) where T : struct
+        private static string NullToValue<T>(T? nullValue) where T : struct
         {
-            if (!newValue.HasValue)
+            if (!nullValue.HasValue)
             {
                 return "NULL";
             }
 
-            return ToValue<T>(newValue.Value);
+            return ToValue<T>(nullValue.Value);
         }
 
-        private static string ToValue<T>(T newValue) where T : struct
+        private static string ToValue<T>(T value) where T : struct
         {
             if (typeof(T) == typeof(bool))
             {
-                return BoolToString((bool)(object)newValue);
+                return BoolToString((bool)(object)value);
             }
 
             if (typeof(T) == typeof(DateTime))
             {
-                return DateTimeToString((DateTime)(object)newValue);
+                return DateTimeToString((DateTime)(object)value);
             }
 
-            return newValue.ToString();
+            return value.ToString();
         }
 
         private static string BoolToString(bool val)

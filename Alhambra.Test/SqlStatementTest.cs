@@ -21,6 +21,12 @@ namespace AlhambraTest
         }
 
         [TestMethod]
+        public void stringへの暗黙変換を許容()
+        {
+            Assert.AreEqual<string>("N'FUGA'", new SqlStatement("@HOGE@").Replace("HOGE", new SqlStatement("FUGA")));
+        }
+
+        [TestMethod]
         public void ヌル許容型の置換()
         {
             bool? boo = null;
@@ -43,25 +49,25 @@ namespace AlhambraTest
         {
             //文字列
             var moto = new string[] { "aaa", "bbb", "ccc" };
-            Assert.AreEqual<string>("WHERE HAGE IN (N'aaa',N'bbb',N'ccc')", new SqlStatement("WHERE HAGE IN @HAGES@").ReplaceIn("HAGES", moto));
+            Assert.AreEqual<string>("WHERE HAGE IN (N'aaa',N'bbb',N'ccc')", new SqlStatement("WHERE HAGE IN @HAGES@").Replace("HAGES", moto));
 
             //数値
             var moto1 = new int[] { 1, 2, 3 };
-            Assert.AreEqual<string>("WHERE HAGE IN (1,2,3)", new SqlStatement("WHERE HAGE IN @HAGES@").ReplaceIn("HAGES", moto1));
+            Assert.AreEqual<string>("WHERE HAGE IN (1,2,3)", new SqlStatement("WHERE HAGE IN @HAGES@").Replace("HAGES", moto1));
 
             //真理値
             var moto2 = new bool[] { true, false };
-            Assert.AreEqual<string>("WHERE HAGE IN (1,0)", new SqlStatement("WHERE HAGE IN @HAGES@").ReplaceIn("HAGES", moto2));
+            Assert.AreEqual<string>("WHERE HAGE IN (1,0)", new SqlStatement("WHERE HAGE IN @HAGES@").Replace("HAGES", moto2));
 
             //日付
             var moto3 = new DateTime[] { new DateTime(2001, 1, 1), new DateTime(2001, 2, 1), new DateTime(2001, 12, 31) };
-            Assert.AreEqual<string>("WHERE HAGE IN ('2001/01/01 00:00:00','2001/02/01 00:00:00','2001/12/31 00:00:00')", new SqlStatement("WHERE HAGE IN @HAGES@").ReplaceIn("HAGES", moto3));
+            Assert.AreEqual<string>("WHERE HAGE IN ('2001/01/01 00:00:00','2001/02/01 00:00:00','2001/12/31 00:00:00')", new SqlStatement("WHERE HAGE IN @HAGES@").Replace("HAGES", moto3));
         }
 
         [TestMethod]
         public void 部分一致置換()
         {
-            Assert.AreEqual<string>("'%FUGA%'", new SqlStatement("@HOGE@").ReplaceForPartialMatchRetrieval("HOGE", "FUGA"));
+            Assert.AreEqual<string>("'%FUGA%'", new SqlStatement("@HOGE@").ReplaceForPartialMatch("HOGE", "FUGA"));
         }
 
         [TestMethod]
