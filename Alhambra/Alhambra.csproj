@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigUtil\Config.cs" />
-    <Compile Include="ConfigUtil\ConfigValueBase.cs" />
+    <Compile Include="ConfigUtil\AppSettingsReaderExtentions.cs" />
     <Compile Include="DBHelperException.cs" />
     <Compile Include="Db\Data\DataRowAccessor.cs" />
     <Compile Include="Db\Data\LinqList.cs" />

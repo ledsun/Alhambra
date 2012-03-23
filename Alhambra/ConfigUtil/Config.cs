@@ -6,7 +6,7 @@ namespace Ledsun.Alhambra.ConfigUtil
 {
     /// <summary>
     /// XXX.Configの設定値を読み取るクラスです。
-    /// Config.Value.DBPrefixという形で値を取得できます。
+    /// Config.Value.SqlCommandTimeoutという形で値を取得できます。
     /// プロジェクト固有の設定はConfig.ConfigValueクラスに拡張メソッドを追加すれば同じように行けると思うけど、未検証です。
     /// </summary>
     public class Config
@@ -22,8 +22,10 @@ namespace Ledsun.Alhambra.ConfigUtil
             get { return value; }
         }
 
-        public class ConfigValue : ConfigValueBase
+        public class ConfigValue 
         {
+            private static AppSettingsReader _reader = new AppSettingsReader();
+
             /// <summary>
             /// 名前を指定してデータベース接続文字列を取得する。
             /// プラグインごとにデータベース接続文字列を分けるために使用。
@@ -54,7 +56,7 @@ namespace Ledsun.Alhambra.ConfigUtil
                 {
                     try
                     {
-                        return GetValueInt(MethodBase.GetCurrentMethod().Name.Substring(4));
+                        return _reader.GetValue<int>(MethodBase.GetCurrentMethod().Name.Substring(4));
                     }
                     catch (InvalidOperationException)
                     {
