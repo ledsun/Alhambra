@@ -5,10 +5,17 @@ using System.Text;
 
 namespace Ledsun.Alhambra.Db
 {
-    //SQLステートメントを作成するためのクラスです。
-    //@で囲んだ文字列を、指定の値に置き換えてくれるReplaceメソッドを提供します。
-    //以下のようにしてSQL文字列を作成することができます。
-    // new SqlStatement("SELECT * FROM TABLE WHERE ID = @ID@").Replace("ID", 100).ToString();
+    /// <summary>
+    /// SQLステートメントを作成するためのクラスです。
+    /// @で囲んだ文字列を、指定の値に置き換えてくれるReplaceメソッドを提供します。
+    /// 以下のようにしてSQL文字列を作成することができます。
+    /// new SqlStatement("SELECT * FROM TABLE WHERE ID = @ID@").Replace("ID", 100).ToString();
+    ///[設計メモ]
+    /// 値型用のメソッドを値型（ヌル許容）と同様のジェネリックではなくオーバーロードで実装した理由。
+    ///  値型用のジェネリックなメソッドがあると、文字列への暗黙変換を実装したオブジェクトを引数にしたときに
+    ///  文字列を引数に取るオーバーロードではなくジェネリックのメソッドが優先して呼ばれます。
+    ///  そのため呼び出し時に明示的に文字列に変換する必要が出てきます。
+    /// </summary>
     public class SqlStatement
     {
         private const string SQL_DATETIME_FORMAT = "\\'yyyy/MM/dd HH:mm:ss\\'";
@@ -42,11 +49,6 @@ namespace Ledsun.Alhambra.Db
             if (string.IsNullOrEmpty(oldValue))
             {
                 throw new ArgumentException("oldValue");
-            }
-
-            if (string.IsNullOrEmpty(newValue))
-            {
-                throw new ArgumentException("newValue");
             }
 
             return ReplaceByAtmark(oldValue, StringToString(newValue));
@@ -157,26 +159,27 @@ namespace Ledsun.Alhambra.Db
             {
                 var strs = newValues.Select(val =>
                 {
+                    if (typeof(T) == typeof(string))
+                    {
+                        return StringToString((string)(object)val);
+                    }
+
                     if (val == null)
                     {
                         return "NULL";
                     }
-                    else if (typeof(T) == typeof(string))
-                    {
-                        return StringToString((string)(object)val);
-                    }
-                    else if (typeof(T) == typeof(bool))
+
+                    if (typeof(T) == typeof(bool))
                     {
                         return BoolToString((bool)(object)val);
                     }
-                    else if (typeof(T) == typeof(DateTime))
+
+                    if (typeof(T) == typeof(DateTime))
                     {
                         return DateTimeToString((DateTime)(object)val);
                     }
-                    else
-                    {
-                        return val.ToString();
-                    }
+
+                    return val.ToString();
                 });
 
                 return ReplaceByAtmark(oldValue, "(" + string.Join(",", strs) + ")");
@@ -218,12 +221,12 @@ namespace Ledsun.Alhambra.Db
         {
             if (string.IsNullOrEmpty(oldValue))
             {
-                throw new ArgumentException("oldString");
+                throw new ArgumentException("oldValue");
             }
 
             if (string.IsNullOrEmpty(newValue))
             {
-                throw new ArgumentException("newString");
+                throw new ArgumentException("newValue");
             }
 
             return ReplaceByAtmark(oldValue, Sanitize(newValue));

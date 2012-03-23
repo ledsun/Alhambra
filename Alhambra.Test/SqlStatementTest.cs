@@ -26,6 +26,16 @@ namespace AlhambraTest
             Assert.AreEqual<string>("N'FUGA'", new SqlStatement("@HOGE@").Replace("HOGE", new SqlStatement("FUGA")));
         }
 
+
+        [TestMethod]
+        public void stringはヌルならから文字として扱う()
+        {
+            Assert.AreEqual<string>("N''", new SqlStatement("@HOGE@").Replace("HOGE", null));
+
+            string[] hoge = new string[] { null };
+            Assert.AreEqual<string>("(N'')", new SqlStatement("@HOGE@").Replace("HOGE", hoge));
+        }
+
         [TestMethod]
         public void ヌル許容型の置換()
         {
