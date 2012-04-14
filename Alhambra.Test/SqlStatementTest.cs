@@ -81,6 +81,18 @@ namespace AlhambraTest
         }
 
         [TestMethod]
+        public void And検索用置換()
+        {
+            var sql = new SqlStatement(@"SELECT * FROM TABLE_A WHERE @LIKE_MULTI@");
+            Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (0=0)", sql.ReplaceMultiLike("LIKE_MULTI", "COLUMN_A", ""));
+            Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (COLUMN_A LIKE '%A%')", sql.ReplaceMultiLike("LIKE_MULTI", "COLUMN_A", "A"));
+            Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (COLUMN_A LIKE '%A%' AND COLUMN_A LIKE '%B%')", sql.ReplaceMultiLike("LIKE_MULTI", "COLUMN_A", "A B"));
+            Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (COLUMN_A LIKE '%A%' AND COLUMN_A LIKE '%B%')", sql.ReplaceMultiLike("LIKE_MULTI", "COLUMN_A", "A    B"));
+            Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (COLUMN_A LIKE '%A%' AND COLUMN_A LIKE '%B%')", sql.ReplaceMultiLike("LIKE_MULTI", "COLUMN_A", "A　B"));
+            Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (COLUMN_A LIKE '%A%' AND COLUMN_A LIKE '%B%')", sql.ReplaceMultiLike("LIKE_MULTI", "COLUMN_A", " A　B "));
+        }
+
+        [TestMethod]
         public void シングルクォートでくくらない文字列置換()
         {
             Assert.AreEqual<string>("FUGA", new SqlStatement("@HOGE@").ReplaceStripString("HOGE", "FUGA"));

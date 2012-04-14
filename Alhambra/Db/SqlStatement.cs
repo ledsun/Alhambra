@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using Ledsun.Alhambra.Db.SqlExtentions;
 
 namespace Ledsun.Alhambra.Db
 {
@@ -18,7 +20,6 @@ namespace Ledsun.Alhambra.Db
     /// </summary>
     public class SqlStatement
     {
-        private const string SQL_DATETIME_FORMAT = "\\'yyyy/MM/dd HH:mm:ss\\'";
         private readonly string _baseSql;
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Ledsun.Alhambra.Db
                 throw new ArgumentException("oldValue");
             }
 
-            return ReplaceByAtmark(oldValue, StringToString(newValue));
+            return ReplaceByAtmark(oldValue, newValue.ToMultiByteString());
         }
 
         #region 値型の置換
@@ -161,7 +162,7 @@ namespace Ledsun.Alhambra.Db
                 {
                     if (typeof(T) == typeof(string))
                     {
-                        return StringToString((string)(object)val);
+                        return ((string)(object)val).ToMultiByteString();
                     }
 
                     if (val == null)
@@ -171,12 +172,12 @@ namespace Ledsun.Alhambra.Db
 
                     if (typeof(T) == typeof(bool))
                     {
-                        return BoolToString((bool)(object)val);
+                        return ((bool)(object)val).ToSqlString();
                     }
 
                     if (typeof(T) == typeof(DateTime))
                     {
-                        return DateTimeToString((DateTime)(object)val);
+                        return ((DateTime)(object)val).ToSqlString();
                     }
 
                     return val.ToString();
@@ -207,8 +208,26 @@ namespace Ledsun.Alhambra.Db
                 throw new ArgumentException("newValue");
             }
 
-            return ReplaceByAtmark(oldValue, "'%" + Sanitize(newValue) + "%'");
+            return ReplaceByAtmark(oldValue, newValue.ToPartialMatchString());
         }
+
+        /// <summary>
+        /// 特定のカラムに対し、複数の条件ANDつなぎとしてlike検索をかけるReplace
+        /// </summary>
+        /// <param name="oldValue">置き換えを行う文字列</param>
+        /// <param name="columnName">条件対象のカラム名</param>
+        /// <param name="newValues">複数のlike検索条件。条件が0件だった場合は(0=0)を返します。</param>
+        /// <returns>()で括って条件を返すのでOR句とつなげても問題が出ません。</returns>
+        public SqlStatement ReplaceMultiLike(string oldValue, string columnName, string newValues)
+        {
+            var parameters = Regex.Split(newValues, "\\s")
+                .Where(s => s != "")
+                .Select(s => columnName + " LIKE " + s.ToPartialMatchString())
+                .AndJoin();
+
+            return ReplaceByAtmark(oldValue, "(" + (parameters.Length > 0 ? parameters : "0=0") + ")");
+        }
+
 
         /// <summary>
         /// 文字列だがシングルクォートで囲まない
@@ -229,7 +248,7 @@ namespace Ledsun.Alhambra.Db
                 throw new ArgumentException("newValue");
             }
 
-            return ReplaceByAtmark(oldValue, Sanitize(newValue));
+            return ReplaceByAtmark(oldValue, newValue.Sanitize());
         }
 
         #region 文字列変換
@@ -277,30 +296,15 @@ namespace Ledsun.Alhambra.Db
         {
             if (typeof(T) == typeof(bool))
             {
-                return BoolToString((bool)(object)value);
+                return ((bool)(object)value).ToSqlString();
             }
 
             if (typeof(T) == typeof(DateTime))
             {
-                return DateTimeToString((DateTime)(object)value);
+                return ((DateTime)(object)value).ToSqlString();
             }
 
             return value.ToString();
-        }
-
-        private static string BoolToString(bool val)
-        {
-            return val ? "1" : "0";
-        }
-
-        private static string DateTimeToString(DateTime val)
-        {
-            return val.ToString(SQL_DATETIME_FORMAT);
-        }
-
-        private string StringToString(string val)
-        {
-            return "N'" + Sanitize(val) + "'";
         }
 
         /// <summary>
@@ -312,36 +316,6 @@ namespace Ledsun.Alhambra.Db
         private SqlStatement ReplaceByAtmark(string oldValue, string newValue)
         {
             return new SqlStatement(_baseSql.Replace("@" + oldValue + "@", newValue));
-        }
-
-        /// <summary>
-        /// 文字列置換時にSQLインジェクション対策に危険な文字列（シングルクォートとパーセント）をエスケープします。
-        /// varchar型等にNullを指定したい場合は、nullではなく文字列"NULL"を指定してください。
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        private string Sanitize(string value)
-        {
-            //IEnumerableの要素にnullが入っていた場合はチェックできないので、ここでnullを空文字に置き換えます
-            if (String.IsNullOrEmpty(value))
-            {
-                return "";
-            }
-
-            var builder = new StringBuilder(value.Length);
-            foreach (char c in value)
-            {
-                if (c == '\'')
-                {
-                    builder.Append('\'');
-                }
-                if (c == '%')
-                {
-                    builder.Append('\\');
-                }
-                builder.Append(c);
-            }
-            return builder.ToString();
         }
         #endregion
     }
