@@ -207,12 +207,13 @@ namespace Ledsun.Alhambra.Db
         }
 
         /// <summary>
-        /// 特定のカラムに対し、複数の条件ANDつなぎとしてlike検索をかけるReplace
+        /// AND検索用Replace
+        /// (カラム名 LIKE '%語句1%' AND カラム名 LIKE '%語句2%')形式に置き換えます。
         /// </summary>
         /// <param name="oldValue">置き換えを行う文字列</param>
         /// <param name="columnName">条件対象のカラム名</param>
-        /// <param name="newValues">複数のlike検索条件。条件が0件だった場合は(0=0)を返します。</param>
-        /// <returns>()で括って条件を返すのでOR句とつなげても問題が出ません。</returns>
+        /// <param name="newValues">空白区切りの複数条件。条件が0件だった場合は(0=0)を返します。</param>
+        /// <returns>()で括った文字列に置き換えるので、そのままOR句と繋ぐことができます。</returns>
         public SqlStatement ReplaceMultiLike(string oldValue, string columnName, string newValues)
         {
             var parameters = Regex.Split(newValues, "\\s")
@@ -222,7 +223,6 @@ namespace Ledsun.Alhambra.Db
 
             return ReplaceByAtmark(oldValue, "(" + (parameters.Length > 0 ? parameters : "0=0") + ")");
         }
-
 
         /// <summary>
         /// 文字列だがシングルクォートで囲まない
