@@ -203,11 +203,6 @@ namespace Ledsun.Alhambra.Db
                 throw new ArgumentException("oldValue");
             }
 
-            if (string.IsNullOrEmpty(newValue))
-            {
-                throw new ArgumentException("newValue");
-            }
-
             return ReplaceByAtmark(oldValue, newValue.ToPartialMatchString());
         }
 
