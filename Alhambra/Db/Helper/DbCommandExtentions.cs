@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using Ledsun.Alhambra.Db.Data;
+using Alhambra.Db.Data;
 
-namespace Ledsun.Alhambra.Db.Helper
+namespace Alhambra.Db.Helper
 {
     /// <summary>
     /// IDbCommandägí£

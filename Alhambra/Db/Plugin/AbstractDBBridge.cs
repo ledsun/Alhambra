@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using Ledsun.Alhambra.ConfigUtil;
-using Ledsun.Alhambra.Db.Data;
-using Ledsun.Alhambra.Db.Helper;
+using Alhambra.ConfigUtil;
+using Alhambra.Db.Data;
+using Alhambra.Db.Helper;
 
-namespace Ledsun.Alhambra.Db.Plugin
+namespace Alhambra.Db.Plugin
 {
     /// <summary>
     /// DBに対する操作を定義したクラスです。

@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using Ledsun.Alhambra.Db.Plugin;
+using Alhambra.Db.Plugin;
 
-namespace Ledsun.Alhambra.Db.Helper
+namespace Alhambra.Db.Helper
 {
     /// <summary>
     /// クライアントクラスで使用するトランザクションクラスです。

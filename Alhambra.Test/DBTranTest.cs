@@ -1,6 +1,6 @@
 ﻿using System;
-using Ledsun.Alhambra.Db.Helper;
-using Ledsun.Alhambra.Db.Plugin;
+using Alhambra.Db.Helper;
+using Alhambra.Db.Plugin;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlhambraTest

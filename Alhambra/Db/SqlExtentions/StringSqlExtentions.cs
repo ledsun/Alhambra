@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Ledsun.Alhambra.Db.SqlExtentions
+namespace Alhambra.Db.SqlExtentions
 {
     internal static class StringSqlExtentions
     {

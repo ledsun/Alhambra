@@ -2,7 +2,7 @@ using System;
 using System.Configuration;
 using System.Reflection;
 
-namespace Ledsun.Alhambra.ConfigUtil
+namespace Alhambra.ConfigUtil
 {
     /// <summary>
     /// XXX.Configの設定値を読み取るクラスです。

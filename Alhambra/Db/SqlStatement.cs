@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Ledsun.Alhambra.Db.SqlExtentions;
+using Alhambra.Db.SqlExtentions;
 
-namespace Ledsun.Alhambra.Db
+namespace Alhambra.Db
 {
     /// <summary>
     /// SQLステートメントを作成するためのクラスです。

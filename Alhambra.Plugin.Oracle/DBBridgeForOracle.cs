@@ -1,10 +1,10 @@
 using System.ComponentModel.Composition;
 using System.Data;
-using Ledsun.Alhambra.ConfigUtil;
-using Ledsun.Alhambra.Db.Plugin;
+using Alhambra.ConfigUtil;
+using Alhambra.Db.Plugin;
 using Oracle.DataAccess.Client;
 
-namespace Ledsun.Alhambra.Plugin.Oracle
+namespace Alhambra.Plugin.Oracle
 {
     [Export(typeof(AbstractDBBridge))]
     public class DBBridgeForOracle : AbstractDBBridge

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Ledsun.Alhambra.Db.Data;
+using Alhambra.Db.Data;
 
-namespace Ledsun.Alhambra.Db.Helper
+namespace Alhambra.Db.Helper
 {
     /// <summary>
     /// IDbDataAdapterの拡張

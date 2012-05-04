@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Collections;
 
-namespace Ledsun.Alhambra.Db.Data
+namespace Alhambra.Db.Data
 {
     /// <summary>
     /// DataTable.RowsをLINQで扱えるようにするためのラッパ

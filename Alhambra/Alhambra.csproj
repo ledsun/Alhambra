@@ -8,7 +8,7 @@
     <ProjectGuid>{6E68E7D7-6859-4683-BC52-42220D9AE602}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ledsun.Alhambra</RootNamespace>
+    <RootNamespace>Alhambra</RootNamespace>
     <AssemblyName>Alhambra</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

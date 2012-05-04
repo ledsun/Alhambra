@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 
-namespace Ledsun.Alhambra.Db.Plugin
+namespace Alhambra.Db.Plugin
 {
     /// <summary>
     /// DB接続用のインスタンスを返すファクトリーです。

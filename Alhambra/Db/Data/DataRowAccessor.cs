@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Ledsun.Alhambra.Db.Data
+namespace Alhambra.Db.Data
 {
     /// <summary>
     /// DataRowオブジェクトの各列の値をTypeConvertableWrapperに変換して取得するラッパー。

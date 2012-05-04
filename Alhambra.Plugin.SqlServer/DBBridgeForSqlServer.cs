@@ -1,10 +1,10 @@
 using System.ComponentModel.Composition;
 using System.Data;
 using System.Data.SqlClient;
-using Ledsun.Alhambra.ConfigUtil;
-using Ledsun.Alhambra.Db.Plugin;
+using Alhambra.ConfigUtil;
+using Alhambra.Db.Plugin;
 
-namespace Ledsun.Alhambra.Plugin.SqlServer
+namespace Alhambra.Plugin.SqlServer
 {
     [Export(typeof(AbstractDBBridge))]
     public class DBBridgeForSqlServer : AbstractDBBridge

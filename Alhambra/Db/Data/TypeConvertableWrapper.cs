@@ -1,7 +1,7 @@
 using System;
 using Ledsun.ObjectTypeConvertExtentions;
 
-namespace Ledsun.Alhambra.Db.Data
+namespace Alhambra.Db.Data
 {
     /// <summary>
     /// 型変換機能を持つヘルパークラス

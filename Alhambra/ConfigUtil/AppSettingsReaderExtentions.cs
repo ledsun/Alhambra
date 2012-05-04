@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace Ledsun.Alhambra.ConfigUtil
+namespace Alhambra.ConfigUtil
 {
     /// <summary>
     /// configファイルの内容をキャストして取得する。

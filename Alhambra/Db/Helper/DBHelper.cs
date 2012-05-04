@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Data;
-using Ledsun.Alhambra.Db.Data;
-using Ledsun.Alhambra.Db.Plugin;
+using Alhambra.Db.Data;
+using Alhambra.Db.Plugin;
 
-namespace Ledsun.Alhambra.Db.Helper
+namespace Alhambra.Db.Helper
 {
     /// <summary>
     /// DBアクセス用のユーティリティクラスです。
