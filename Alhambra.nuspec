@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <authors>ledsun</authors>
     <owners />
     <licenseUrl>http://www.opensource.org/licenses/MIT</licenseUrl>
     <projectUrl>https://github.com/ledsun/Alhambra</projectUrl>
     <dependencies>
-      <dependency id="ObjectTypeConvertExtentions" version="0.0.1" />
+      <dependency id="ObjectTypeConvertExtentions" version="0.0.4" />
     </dependencies>
     <id>Alhambra</id>
     <title>Alhambra DBHelper</title>

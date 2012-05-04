@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ObjectTypeConvertExtentions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ObjectTypeConvertExtentions.0.0.3\lib\ObjectTypeConvertExtentions.dll</HintPath>
+      <HintPath>..\packages\ObjectTypeConvertExtentions.0.0.4\lib\ObjectTypeConvertExtentions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
