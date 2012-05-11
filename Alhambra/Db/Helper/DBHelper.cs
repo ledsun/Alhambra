@@ -28,30 +28,54 @@ namespace Alhambra.Db.Helper
         /// <param name="sql">é¿çsÇ∑ÇÈSQLï∂éöóÒ</param>
         public static int Execute(string sql, DBTran tran = null)
         {
-            return tran == null
-                ? DBFactory.NewDB.Execute(sql)
-                : tran.DB.Execute(sql);
+            if (tran != null)
+            {
+                return tran.DB.Execute(sql);
+            }
+
+            using (var d = DBFactory.NewDB)
+            {
+                return d.Execute(sql);
+            }
         }
 
         public static IEnumerable<DataRowAccessor> Select(string sql, DBTran tran = null)
         {
-            return tran == null
-                ? DBFactory.NewDB.Select(sql)
-                : tran.DB.Select(sql);
+            if (tran != null)
+            {
+                return tran.DB.Select(sql);
+            }
+
+            using (var d = DBFactory.NewDB)
+            {
+                return d.Select(sql);
+            }
         }
 
         public static TypeConvertableWrapper SelectOne(string sql, DBTran tran = null)
         {
-            return tran == null
-                ? DBFactory.NewDB.SelectOne(sql)
-                : tran.DB.SelectOne(sql);
+            if (tran != null)
+            {
+                return tran.DB.SelectOne(sql);
+            }
+
+            using (var d = DBFactory.NewDB)
+            {
+                return d.SelectOne(sql);
+            }
         }
 
         public static DataSet SelectDataSet(string sql, DBTran tran = null)
         {
-            return tran == null
-                ? DBFactory.NewDB.SelectDataSet(sql)
-                : tran.DB.SelectDataSet(sql);
+            if (tran != null)
+            {
+                return tran.DB.SelectDataSet(sql);
+            }
+
+            using (var d = DBFactory.NewDB)
+            {
+                return d.SelectDataSet(sql);
+            }
         }
     }
 }
