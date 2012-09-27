@@ -186,7 +186,7 @@ namespace Alhambra.Db
                 return ReplaceByAtmark(oldValue, "(" + string.Join(",", strs) + ")");
             }
 
-            throw new ArgumentException("newStrings");
+            throw new ArgumentException("newValues Ç™0åèÇ≈Ç∑ÅB");
         }
 
         /// <summary>
