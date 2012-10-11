@@ -33,6 +33,7 @@ namespace Alhambra.Db.Data
         public Byte Byte { get { return _value.Byte(); } }
         public string String { get { return _value.String(); } }
         public decimal Decimal { get { return _value.Decimal(); } }
+        public decimal? DecimalNull { get { return _value.DecimalNull(); } }
         public DateTime DateTime { get { return _value.DateTime(); } }
         public DateTime? DateTimeNull { get { return _value.DateTimeNull(); } }
         public double Double { get { return _value.Double(); } }

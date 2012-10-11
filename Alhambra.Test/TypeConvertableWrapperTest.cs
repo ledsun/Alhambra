@@ -14,7 +14,9 @@ namespace AlhambraTest
         TypeConvertableWrapper _BoolData;
         TypeConvertableWrapper _ByteData;
         TypeConvertableWrapper _DateTimeData;
+        TypeConvertableWrapper _DateTimeNullData;
         TypeConvertableWrapper _DecimalData;
+        TypeConvertableWrapper _DecimalNullData;
         TypeConvertableWrapper _DoubleData;
         TypeConvertableWrapper _IntData;
         TypeConvertableWrapper _Int16Data;
@@ -29,7 +31,9 @@ namespace AlhambraTest
             _BoolData = new TypeConvertableWrapper(false);
             _ByteData = new TypeConvertableWrapper(Byte.Parse("255"));
             _DateTimeData = new TypeConvertableWrapper(new DateTime(2009, 4, 7));
+            _DateTimeNullData = new TypeConvertableWrapper(null);
             _DecimalData = new TypeConvertableWrapper(new Decimal(123.456));
+            _DecimalNullData = new TypeConvertableWrapper(null);
             _DoubleData = new TypeConvertableWrapper(456.789d);
             _IntData = new TypeConvertableWrapper(-100);
             _Int16Data = new TypeConvertableWrapper(30000);
@@ -66,7 +70,9 @@ namespace AlhambraTest
             Assert.AreEqual<bool>(false, _BoolData.Bool);
             Assert.AreEqual<byte>(Byte.Parse("255"), _ByteData.Byte);
             Assert.AreEqual<DateTime>(new DateTime(2009, 4, 7), _DateTimeData.DateTime);
+            Assert.AreEqual<DateTime?>(null, _DateTimeNullData.DateTimeNull);
             Assert.AreEqual<decimal>(123.456m, _DecimalData.Decimal);
+            Assert.AreEqual<decimal?>(null, _DecimalNullData.DecimalNull);
             Assert.AreEqual<double>(456.789d, _DoubleData.Double);
             Assert.AreEqual<int>(-100, _IntData.Int);
             Assert.AreEqual<short>(30000, _Int16Data.Int16);
