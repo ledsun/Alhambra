@@ -122,6 +122,20 @@ namespace Alhambra.Db.Plugin
 
             return PrepareDataAdapter(sql).SelectDataSetFromDataAdapter();
         }
+
+        /// <summary>
+        /// テーブルスキーマを取得します。
+        /// 結果はDataTableで返します。
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public DataTable SelectTableSchema(string tableName)
+        {
+            if (String.IsNullOrEmpty(tableName))
+                throw new ArgumentException("テーブル名にヌルまたは空文字は指定できません。");
+
+            return PrepareDataAdapter(string.Format("SELECT * FROM {0};", tableName)).SelectTableSchema();
+        }
         #endregion
 
         #region トランザクション操作

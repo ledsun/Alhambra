@@ -77,5 +77,13 @@ namespace Alhambra.Db.Helper
                 return d.SelectDataSet(sql);
             }
         }
+
+        public static DataTable SelectTableSchema(string tableName)
+        {
+            using (var d = DBFactory.NewDB)
+            {
+                return d.SelectTableSchema(tableName);
+            }
+        }
     }
 }

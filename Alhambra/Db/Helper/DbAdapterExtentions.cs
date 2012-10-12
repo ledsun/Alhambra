@@ -18,9 +18,7 @@ namespace Alhambra.Db.Helper
         /// <returns></returns>
         internal static IEnumerable<DataRowAccessor> SelectFromDataAdapter(this IDbDataAdapter adapter)
         {
-            var ds = new DataSet();
-            FillDataSet(adapter, ds);
-            return new LinqList<DataRow>(ds.Tables[0].Rows)
+            return new LinqList<DataRow>(FillDataSet(adapter).Tables[0].Rows)
                 .Select(r => new DataRowAccessor(r));
         }
 
@@ -31,9 +29,26 @@ namespace Alhambra.Db.Helper
         /// <returns></returns>
         internal static DataSet SelectDataSetFromDataAdapter(this IDbDataAdapter adapter)
         {
-            var ds = new DataSet();
-            FillDataSet(adapter, ds);
-            return ds;
+            return FillDataSet(adapter);
+        }
+
+        /// <summary>
+        /// テーブルスキーマを取得します。
+        /// </summary>
+        /// <param name="adapter"></param>
+        /// <returns></returns>
+        internal static DataTable SelectTableSchema(this IDbDataAdapter adapter)
+        {
+            try
+            {
+                var ds = new DataSet();
+                adapter.FillSchema(ds, SchemaType.Source);
+                return ds.Tables[0];
+            }
+            catch (SystemException e)
+            {
+                throw new DBHelperException(e, adapter.SelectCommand);
+            }
         }
 
         /// <summary>
@@ -41,11 +56,13 @@ namespace Alhambra.Db.Helper
         /// </summary>
         /// <param name="adapter"></param>
         /// <param name="ds"></param>
-        private static void FillDataSet(IDbDataAdapter adapter, DataSet ds)
+        private static DataSet FillDataSet(IDbDataAdapter adapter)
         {
             try
             {
+                var ds = new DataSet();
                 adapter.Fill(ds);
+                return ds;
             }
             catch (SystemException e)
             {
