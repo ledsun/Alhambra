@@ -67,18 +67,27 @@ namespace AlhambraTest
         [TestMethod]
         public void プロパティ名で値の型を指定して変換できます()
         {
-            Assert.AreEqual<bool>(false, _BoolData.Bool);
-            Assert.AreEqual<byte>(Byte.Parse("255"), _ByteData.Byte);
-            Assert.AreEqual<DateTime>(new DateTime(2009, 4, 7), _DateTimeData.DateTime);
-            Assert.AreEqual<DateTime?>(null, _DateTimeNullData.DateTimeNull);
-            Assert.AreEqual<decimal>(123.456m, _DecimalData.Decimal);
-            Assert.AreEqual<decimal?>(null, _DecimalNullData.DecimalNull);
-            Assert.AreEqual<double>(456.789d, _DoubleData.Double);
+            Assert.AreEqual<string>("ABC", _StringData.String);
+
+            Assert.AreEqual<uint>(100, _UIntData.UInt);
             Assert.AreEqual<int>(-100, _IntData.Int);
             Assert.AreEqual<short>(30000, _Int16Data.Int16);
             Assert.AreEqual<long>(4000000000L, _Int64Data.Int64);
-            Assert.AreEqual<string>("ABC", _StringData.String);
-            Assert.AreEqual<uint>(100, _UIntData.UInt);
+            Assert.AreEqual<byte>(Byte.Parse("255"), _ByteData.Byte);
+            Assert.AreEqual<decimal>(123.456m, _DecimalData.Decimal);
+            Assert.AreEqual<DateTime>(new DateTime(2009, 4, 7), _DateTimeData.DateTime);
+            Assert.AreEqual<double>(456.789d, _DoubleData.Double);
+            Assert.AreEqual<bool>(false, _BoolData.Bool);
+
+            Assert.AreEqual<uint?>(null, _DateTimeNullData.UIntNull);
+            Assert.AreEqual<int?>(null, _DateTimeNullData.IntNull);
+            Assert.AreEqual<short?>(null, _DateTimeNullData.Int16Null);
+            Assert.AreEqual<long?>(null, _DateTimeNullData.Int64Null);
+            Assert.AreEqual<byte?>(null, _DateTimeNullData.ByteNull);
+            Assert.AreEqual<decimal?>(null, _DecimalNullData.DecimalNull);
+            Assert.AreEqual<DateTime?>(null, _DateTimeNullData.DateTimeNull);
+            Assert.AreEqual<double?>(null, _DateTimeNullData.DoubleNull);
+            Assert.AreEqual<bool?>(null, _DateTimeNullData.BoolNull);
         }
     }
 }

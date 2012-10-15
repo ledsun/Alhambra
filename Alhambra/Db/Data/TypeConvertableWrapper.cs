@@ -26,23 +26,27 @@ namespace Alhambra.Db.Data
         }
 
         //明示的な型を指定したプロパティ
+        public string String { get { return _value.String(); } }
+
         public uint UInt { get { return _value.UInt(); } }
         public int Int { get { return _value.Int(); } }
         public Int16 Int16 { get { return _value.Int16(); } }
         public Int64 Int64 { get { return _value.Int64(); } }
         public Byte Byte { get { return _value.Byte(); } }
-        public string String { get { return _value.String(); } }
         public decimal Decimal { get { return _value.Decimal(); } }
-        public decimal? DecimalNull { get { return _value.DecimalNull(); } }
         public DateTime DateTime { get { return _value.DateTime(); } }
-        public DateTime? DateTimeNull { get { return _value.DateTimeNull(); } }
         public double Double { get { return _value.Double(); } }
-
-        /// <summary>
-        /// 0はFalseそれ以外の数字はTrue
-        /// 文字列の場合はTrue、Falseは変換可能（大文字小文字を区別しない）。それ以外は例外を出す。
-        /// </summary>
         public bool Bool { get { return _value.Bool(); } }
+
+        public uint? UIntNull { get { return _value.UIntNull(); } }
+        public int? IntNull { get { return _value.IntNull(); } }
+        public Int16? Int16Null { get { return _value.Int16Null(); } }
+        public Int64? Int64Null { get { return _value.Int64Null(); } }
+        public Byte? ByteNull { get { return _value.ByteNull(); } }
+        public decimal? DecimalNull { get { return _value.DecimalNull(); } }
+        public DateTime? DateTimeNull { get { return _value.DateTimeNull(); } }
+        public double? DoubleNull { get { return _value.DoubleNull(); } }
+        public bool? BoolNull { get { return _value.BoolNull(); } }
 
         //Stringに関しては暗黙の型変換が可能
         public static implicit operator string(TypeConvertableWrapper value)
