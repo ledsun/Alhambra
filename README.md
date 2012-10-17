@@ -13,6 +13,10 @@ C#/VB.NETからSQLを実行するためのラッパークラスです。
 # 使い方 #
 
 ## 設定 ##
+
+Plugins\Alhumbra.Plugin.SqlServer.dllのプロパティ変更が必要です。
+「出力ディレクトリにコピー」の値を「新しい場合はコピーする」に変更してください。
+
 app.configファイルやweb.configファイルに記述が必要です
 
 >     <configuration>
