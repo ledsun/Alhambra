@@ -20,6 +20,8 @@ namespace Alhambra.Db
     /// </summary>
     public class SqlStatement
     {
+        public const string SQL_DATETIME_FORMAT = "s";
+
         private readonly string _baseSql;
 
         /// <summary>

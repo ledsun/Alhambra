@@ -10,11 +10,9 @@ namespace Alhambra.Db.SqlExtentions
     /// </summary>
     internal static class DateTimeSqlExtentions
     {
-        private const string SQL_DATETIME_FORMAT = "\\'yyyy/MM/dd HH:mm:ss\\'";
-
         public static string ToSqlString(this DateTime val)
         {
-            return val.ToString(SQL_DATETIME_FORMAT);
+            return "'" + val.ToString(SqlStatement.SQL_DATETIME_FORMAT) + "'";
         }
     }
 }
