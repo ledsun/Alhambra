@@ -245,7 +245,7 @@ namespace Alhambra.Db
                 throw new ArgumentException("newValue");
             }
 
-            return ReplaceByAtmark(oldValue, newValue.Sanitize());
+            return ReplaceByAtmark(oldValue, newValue.SanitizeSigleQuate());
         }
 
         #region •¶Žš—ñ•ÏŠ·
