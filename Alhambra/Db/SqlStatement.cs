@@ -227,6 +227,24 @@ namespace Alhambra.Db
         }
 
         /// <summary>
+        /// AND検索用Replace
+        /// (カラム名 NOT LIKE '%語句1%' AND カラム名 NOT LIKE '%語句2%')形式に置き換えます。
+        /// </summary>
+        /// <param name="oldValue">置き換えを行う文字列</param>
+        /// <param name="columnName">条件対象のカラム名</param>
+        /// <param name="newValues">空白区切りの複数条件。条件が0件だった場合は(0=0)を返します。</param>
+        /// <returns>()で括った文字列に置き換えるので、そのままOR句と繋ぐことができます。</returns>
+        public SqlStatement ReplaceMultiNotLike(string oldValue, string columnName, string newValues)
+        {
+            var parameters = Regex.Split(newValues, "\\s")
+                .Where(s => s != "")
+                .Select(s => columnName + " NOT LIKE " + s.ToPartialMatchString())
+                .AndJoin();
+
+            return ReplaceByAtmark(oldValue, "(" + (parameters.Length > 0 ? parameters : "0=0") + ")");
+        }
+
+        /// <summary>
         /// 文字列だがシングルクォートで囲まない
         /// DB名、テーブル名の置換に必要
         /// </summary>

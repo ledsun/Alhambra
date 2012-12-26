@@ -81,7 +81,7 @@ namespace AlhambraTest
         }
 
         [TestMethod]
-        public void And検索用置換()
+        public void 文字列のAnd検索用置換()
         {
             var sql = new SqlStatement(@"SELECT * FROM TABLE_A WHERE @LIKE_MULTI@");
             Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (0=0)", sql.ReplaceMultiLike("LIKE_MULTI", "COLUMN_A", ""));
@@ -90,6 +90,13 @@ namespace AlhambraTest
             Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (COLUMN_A LIKE '%A%' AND COLUMN_A LIKE '%B%')", sql.ReplaceMultiLike("LIKE_MULTI", "COLUMN_A", "A    B"));
             Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (COLUMN_A LIKE '%A%' AND COLUMN_A LIKE '%B%')", sql.ReplaceMultiLike("LIKE_MULTI", "COLUMN_A", "A　B"));
             Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (COLUMN_A LIKE '%A%' AND COLUMN_A LIKE '%B%')", sql.ReplaceMultiLike("LIKE_MULTI", "COLUMN_A", " A　B "));
+
+            Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (0=0)", sql.ReplaceMultiNotLike("LIKE_MULTI", "COLUMN_A", ""));
+            Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (COLUMN_A NOT LIKE '%A%')", sql.ReplaceMultiNotLike("LIKE_MULTI", "COLUMN_A", "A"));
+            Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (COLUMN_A NOT LIKE '%A%' AND COLUMN_A NOT LIKE '%B%')", sql.ReplaceMultiNotLike("LIKE_MULTI", "COLUMN_A", "A B"));
+            Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (COLUMN_A NOT LIKE '%A%' AND COLUMN_A NOT LIKE '%B%')", sql.ReplaceMultiNotLike("LIKE_MULTI", "COLUMN_A", "A    B"));
+            Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (COLUMN_A NOT LIKE '%A%' AND COLUMN_A NOT LIKE '%B%')", sql.ReplaceMultiNotLike("LIKE_MULTI", "COLUMN_A", "A　B"));
+            Assert.AreEqual<string>("SELECT * FROM TABLE_A WHERE (COLUMN_A NOT LIKE '%A%' AND COLUMN_A NOT LIKE '%B%')", sql.ReplaceMultiNotLike("LIKE_MULTI", "COLUMN_A", " A　B "));
         }
 
         [TestMethod]
