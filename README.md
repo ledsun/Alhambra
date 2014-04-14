@@ -68,3 +68,10 @@ GridViewやDropDownListのDataSourceに指定する場合はDataSetで取れた�
 ### ストアドプロシージャ ###
 
 >     DBHelper.Execute("exec sp_XXX");
+
+# 開発者向け
+
+## 開発環境
+
+- Microsoft Visual Studio Professional 2013
+- Microsoft SQLServer Express 2012

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Alhambra.ConfigUtil;
+using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
@@ -31,12 +32,12 @@ namespace Alhambra.Db.Plugin
                 Directory.CreateDirectory(pluginsPath);
             }
 
-            _catalog.Catalogs.Add(new DirectoryCatalog(pluginsPath));
+            _catalog.Catalogs.Add(new DirectoryCatalog(pluginsPath).FilterPlugin());
 
             //ASP.NETの場合dllのあるディレクトリをHttpRuntime.BinDirectoryから取得
             try
             {
-                _catalog.Catalogs.Add(new DirectoryCatalog(HttpRuntime.BinDirectory));
+                _catalog.Catalogs.Add(new DirectoryCatalog(HttpRuntime.BinDirectory).FilterPlugin());
             }
             catch (ArgumentNullException)
             {
@@ -46,6 +47,20 @@ namespace Alhambra.Db.Plugin
             if (_catalog.Parts.Count() == 0)
             {
                 throw new DBHelperException("DBHelperプラグインdllの読み込みに失敗しました。");
+            }
+        }
+
+        //指定プラグインのみを読み込みます。
+        private static FilteredCatalog FilterPlugin(this DirectoryCatalog catalog)
+        {
+            if (Config.Value.PluginName == "")
+            {
+                //プラグイン名が指定されていなければ全てを返します。
+                return catalog.Filter(c => true);
+            }
+            else
+            {
+                return catalog.Filter(c => c.ToString().StartsWith("Alhambra.Plugin." + Config.Value.PluginName));
             }
         }
 

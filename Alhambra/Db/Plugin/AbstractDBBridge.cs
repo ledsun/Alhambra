@@ -36,6 +36,11 @@ namespace Alhambra.Db.Plugin
         abstract protected IDbDataAdapter CreateAdapter(string sql, IDbConnection con);
 
         /// <summary>
+        /// プラグイン名を返します。
+        /// </summary>
+        abstract public string PluginName { get; }
+
+        /// <summary>
         /// DBへの接続文字列を返します。
         /// </summary>
         abstract protected string ConnectionString { get; }

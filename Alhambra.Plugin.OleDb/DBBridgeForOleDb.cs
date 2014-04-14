@@ -1,36 +1,37 @@
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using System.Data;
+using System.Data.SqlClient;
 using Alhambra.ConfigUtil;
 using Alhambra.Db.Plugin;
-using Oracle.DataAccess.Client;
+using System.Data.OleDb;
 
-namespace Alhambra.Plugin.Oracle
+namespace Alhambra.Plugin.OleDb
 {
     [Export(typeof(AbstractDBBridge))]
-    public class DBBridgeForOracle : AbstractDBBridge
+    public class DBBridgeForOleDb : AbstractDBBridge
     {
-        public DBBridgeForOracle() : base() { }
+        public DBBridgeForOleDb() : base() { }
 
         protected override IDbConnection CreateConnection()
         {
-            return new OracleConnection();
+            return new OleDbConnection();
         }
 
         protected override IDbDataAdapter CreateAdapter(string sql, IDbConnection con)
         {
-            return new OracleDataAdapter(sql, con as OracleConnection);
+            return new OleDbDataAdapter(sql, con as OleDbConnection);
         }
 
         public override string PluginName
         {
-            get { return "Oracle"; }
+            get { return "OleDb"; }
         }
-        
+
         protected override string ConnectionString
         {
             get
             {
-                return Config.Value.GetConnectionString("Oracle");
+                return Config.Value.GetConnectionString("OleDb");
             }
         }
     }

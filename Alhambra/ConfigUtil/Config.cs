@@ -64,6 +64,24 @@ namespace Alhambra.ConfigUtil
                     }
                 }
             }
+
+            /// <summary>
+            /// プラグイン名を取得します。
+            /// </summary>
+            internal string PluginName
+            {
+                get
+                {
+                    try
+                    {
+                        return _reader.GetValue<string>(MethodBase.GetCurrentMethod().Name.Substring(4));
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        return "";
+                    }
+                }
+            }
         }
     }
 }

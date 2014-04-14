@@ -1,21 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Alhambra</id>
-        <version>0.0.6</version>
+        <version>0.0.7</version>
         <title>Alhambra DBHelper</title>
         <authors>ledsun</authors>
-        <owners />
         <licenseUrl>http://www.opensource.org/licenses/MIT</licenseUrl>
         <projectUrl>https://github.com/ledsun/Alhambra</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Alhambra helps open/close DB connections, mapping types between .Net and DB, making sql statement strings.</description>
         <summary>Alhambra is DBHelper, but Not O/R Mapper.</summary>
+        <releaseNotes>Add a new plugin for OLE-DB.</releaseNotes>
         <dependencies>
             <dependency id="ObjectTypeConvertExtentions" version="0.0.5" />
         </dependencies>
     </metadata>
     <files>
+        <file src="Alhambra\bin\Release\Plugins\Alhambra.Plugin.OleDb.dll" target="content\Plugins\Alhambra.Plugin.OleDb.dll" />
         <file src="Alhambra\bin\Release\Plugins\Alhambra.Plugin.SqlServer.dll" target="content\Plugins\Alhambra.Plugin.SqlServer.dll" />
         <file src="Alhambra\bin\Release\Alhambra.dll" target="lib\Alhambra.dll" />
     </files>

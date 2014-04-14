@@ -21,6 +21,11 @@ namespace Alhambra.Plugin.SqlServer
             return new SqlDataAdapter(sql, con as SqlConnection);
         }
 
+        public override string PluginName
+        {
+            get { return "SqlServer"; }
+        }
+        
         protected override string ConnectionString
         {
             get
