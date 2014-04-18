@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Alhambra</id>
-        <version>0.0.7</version>
+        <version>0.0.8</version>
         <title>Alhambra DBHelper</title>
         <authors>ledsun</authors>
         <licenseUrl>http://www.opensource.org/licenses/MIT</licenseUrl>
@@ -10,7 +10,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Alhambra helps open/close DB connections, mapping types between .Net and DB, making sql statement strings.</description>
         <summary>Alhambra is DBHelper, but Not O/R Mapper.</summary>
-        <releaseNotes>Add a new plugin for OLE-DB.</releaseNotes>
+        <releaseNotes>FixBug: A tring format of the DateTime is not match the ACCESS.</releaseNotes>
         <dependencies>
             <dependency id="ObjectTypeConvertExtentions" version="0.0.5" />
         </dependencies>
