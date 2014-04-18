@@ -17,7 +17,7 @@ namespace AlhambraTest
             Assert.AreEqual<string>("1", new SqlStatement("@HOGE@").Replace("HOGE", true));
             Assert.AreEqual<string>("1", new SqlStatement("@HOGE@").Replace("HOGE", 1));
             Assert.AreEqual<string>("1.0", new SqlStatement("@HOGE@").Replace("HOGE", 1.0m));
-            Assert.AreEqual<string>("'2012-03-12T00:00:00'", new SqlStatement("@HOGE@").Replace("HOGE", new DateTime(2012, 3, 12)));
+            Assert.AreEqual<string>("'2012/03/12 00:00:00'", new SqlStatement("@HOGE@").Replace("HOGE", new DateTime(2012, 3, 12)));
         }
 
         [TestMethod]
@@ -71,7 +71,7 @@ namespace AlhambraTest
 
             //日付
             var moto3 = new DateTime[] { new DateTime(2001, 1, 1), new DateTime(2001, 2, 1), new DateTime(2001, 12, 31) };
-            Assert.AreEqual<string>("WHERE HAGE IN ('2001-01-01T00:00:00','2001-02-01T00:00:00','2001-12-31T00:00:00')", new SqlStatement("WHERE HAGE IN @HAGES@").Replace("HAGES", moto3));
+            Assert.AreEqual<string>("WHERE HAGE IN ('2001/01/01 00:00:00','2001/02/01 00:00:00','2001/12/31 00:00:00')", new SqlStatement("WHERE HAGE IN @HAGES@").Replace("HAGES", moto3));
         }
 
         [TestMethod]

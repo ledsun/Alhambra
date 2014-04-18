@@ -20,7 +20,11 @@ namespace Alhambra.Db
     /// </summary>
     public class SqlStatement
     {
-        public const string SQL_DATETIME_FORMAT = "s";
+        /// <summary>
+        /// ライブラリのユーザが参照できるようにpublicで公開しています。
+        /// 標準書式指定文字列's'はAccessが対応していません。
+        /// </summary>
+        public const string SQL_DATETIME_FORMAT = "yyyy'/'MM'/'dd' 'HH':'mm':'ss";
 
         private readonly string _baseSql;
 
