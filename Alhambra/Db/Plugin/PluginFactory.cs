@@ -12,7 +12,7 @@ namespace Alhambra.Db.Plugin
     /// <summary>
     /// DB接続用のインスタンスを返すファクトリーです。
     /// </summary>
-    internal static class DBFactory
+    internal static class PluginFactory
     {
         /// <summary>
         /// プラグインのカタログ
@@ -22,7 +22,7 @@ namespace Alhambra.Db.Plugin
         /// <summary>
         /// プラグインのカタログを初期化します。
         /// </summary>
-        static DBFactory()
+        static PluginFactory()
         {
             //自dllからプラグインの場所を取得
             string executionPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -64,6 +64,7 @@ namespace Alhambra.Db.Plugin
             }
         }
 
+        #region DBBridge
         /// <summary>
         /// 新規のインスタンスを返します。
         /// </summary>
@@ -95,5 +96,46 @@ namespace Alhambra.Db.Plugin
             [Import(typeof(AbstractDBBridge))]
             internal AbstractDBBridge Incubatee { get; set; }
         }
+        #endregion
+
+        #region SQLDefinition
+        /// <summary>
+        /// DBのSQL方言を吸収するプラグインを取得します。
+        /// </summary>
+        internal static ISqlDefinition SqlDefinition
+        {
+            get
+            {
+                var i = new SqlDifinitionIncubator();
+                try
+                {
+                    new CompositionContainer(_catalog).ComposeParts(i);
+                }
+                catch
+                {
+                    // プラグインが無ければデフォルト定義を返します。
+                    return new DefaultSqlDefinition();
+                }
+                return i.Incubatee;
+            }
+        }
+
+        /// <summary>
+        /// SQL定義クラスプラグインの受け口です。
+        /// </summary>
+        public class SqlDifinitionIncubator
+        {
+            [Import(typeof(ISqlDefinition))]
+            internal ISqlDefinition Incubatee { get; set; }
+        }
+
+        private class DefaultSqlDefinition : ISqlDefinition
+        {
+            public string MultiBytePrefix
+            {
+                get { return "N"; }
+            }
+        }
+        #endregion
     }
 }

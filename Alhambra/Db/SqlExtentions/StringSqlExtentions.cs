@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Alhambra.Db.Plugin;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,13 @@ namespace Alhambra.Db.SqlExtentions
     {
         /// <summary>
         /// マルチバイト文字列として扱うために頭にNを付けます。
+        /// Accesssは"N" プレフィックスに対応していないためPluginで上書きします。
         /// </summary>
         /// <param name="val"></param>
         /// <returns></returns>
         public static string ToMultiByteString(this string val)
         {
-            return "N'" + val.SanitizeSigleQuate() + "'";
+            return PluginFactory.SqlDefinition.MultiBytePrefix + "'" + val.SanitizeSigleQuate() + "'";
         }
 
         /// <summary>

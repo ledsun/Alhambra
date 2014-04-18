@@ -62,7 +62,8 @@
     <Compile Include="Db\Helper\DBTran.cs" />
     <Compile Include="Db\Helper\DBCommandExtentions.cs" />
     <Compile Include="Db\Plugin\AbstractDBBridge.cs" />
-    <Compile Include="Db\Plugin\DBFactory.cs" />
+    <Compile Include="Db\Plugin\ISqlDefinition.cs" />
+    <Compile Include="Db\Plugin\PluginFactory.cs" />
     <Compile Include="Db\SqlExtentions\BooleanSqlExtentions.cs" />
     <Compile Include="Db\SqlExtentions\DateTimeSqlExtentions.cs" />
     <Compile Include="Db\SqlExtentions\StringSqlExtentions.cs" />
@@ -76,14 +77,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Plugins\Alhambra.Plugin.OleDb.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Plugins\Alhambra.Plugin.SqlServer.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

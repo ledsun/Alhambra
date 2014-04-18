@@ -22,7 +22,7 @@ namespace Alhambra.Db.Helper
 
         public DBTran()
         {
-            DB = DBFactory.NewDB;
+            DB = PluginFactory.NewDB;
             DB.BeginTransaction();
         }
 

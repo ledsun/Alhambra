@@ -33,7 +33,7 @@ namespace Alhambra.Db.Helper
                 return tran.DB.Execute(sql);
             }
 
-            using (var d = DBFactory.NewDB)
+            using (var d = PluginFactory.NewDB)
             {
                 return d.Execute(sql);
             }
@@ -46,7 +46,7 @@ namespace Alhambra.Db.Helper
                 return tran.DB.Select(sql);
             }
 
-            using (var d = DBFactory.NewDB)
+            using (var d = PluginFactory.NewDB)
             {
                 return d.Select(sql);
             }
@@ -59,7 +59,7 @@ namespace Alhambra.Db.Helper
                 return tran.DB.SelectOne(sql);
             }
 
-            using (var d = DBFactory.NewDB)
+            using (var d = PluginFactory.NewDB)
             {
                 return d.SelectOne(sql);
             }
@@ -72,7 +72,7 @@ namespace Alhambra.Db.Helper
                 return tran.DB.SelectDataSet(sql);
             }
 
-            using (var d = DBFactory.NewDB)
+            using (var d = PluginFactory.NewDB)
             {
                 return d.SelectDataSet(sql);
             }
@@ -80,7 +80,7 @@ namespace Alhambra.Db.Helper
 
         public static DataTable SelectTableSchema(string tableName)
         {
-            using (var d = DBFactory.NewDB)
+            using (var d = PluginFactory.NewDB)
             {
                 return d.SelectTableSchema(tableName);
             }

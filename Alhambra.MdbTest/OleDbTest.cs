@@ -29,5 +29,11 @@ namespace AlhambraTest
             DBHelper.Execute(new SqlStatement(@"INSERT INTO DateTimeTest (TEST_DATE) VALUES (@DATE@)").Replace("DATE", justNow));
             Assert.AreEqual<string>(justNow.ToString(SqlStatement.SQL_DATETIME_FORMAT), DBHelper.SelectOne("SELECT TEST_DATE FROM DateTimeTest WHERE ID = 1"));
         }
+
+        [TestMethod]
+        public void マルチバイト文字列のプレフィックスにNがつかないテスト()
+        {
+            Assert.AreEqual<string>("\'ABC\'", new SqlStatement("@STR@").Replace("STR", "ABC"));
+        }
     }
 }

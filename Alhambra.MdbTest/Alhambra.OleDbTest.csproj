@@ -59,15 +59,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Plugins\Alhambra.Plugin.OleDb.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="test.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Alhambra\Alhambra.csproj">
       <Project>{6e68e7d7-6859-4683-bc52-42220d9ae602}</Project>
       <Name>Alhambra</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="test.mdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
