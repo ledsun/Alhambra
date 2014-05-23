@@ -28,6 +28,8 @@ VisualStudioの`NuGetのパッケージ管理`を使い`Alhambra DBHelper`を検
 プラグインファイルのプロパティで`ビルドアクション`を`なし`に設定してください。
 また、使用するDB用のプラグインの	`出力ディレクトリにコピー`を`新しい場合はコピーする`に設定してください。
 
+※ClickOnceで配布する際は`ビルドアクション`を`コンテンツ`にしてください。ただしVisualStudioでは警告が表示されます。
+
 ### app.config
 
 app.configファイルやweb.configファイルに記述が必要です
@@ -64,7 +66,7 @@ int value =DBHelper.Select(
      ")
   .Replace("ID", 100)
   )
-[0]["VALUE"].Int;
+.Single()["VALUE"].Int;
 ```
 
 #### SQLの作成
@@ -78,7 +80,7 @@ SqlStatementクラスを使って作成します。
 SqlStatementは暗黙的、明示的な文字列への変換をサポート
 
 #### 取得した値
-取得した値はDataRowAccessorのリストで帰ってきます。
+取得した値は`IEnumerable<DataRowAccessor>`で帰ってきます。
 DataRowAccessorはカラムのインデックスまたはカラム名でカラムを指定して値が取得できます。
 取った値はInt、DateTime、Doubleなどのプロパティを指定して明示的に型を変換できます。
 
@@ -115,7 +117,7 @@ DBHelper.Execute("UPDATE T_XXX SET LEVEL_VAL = 30 WHERE ID = 'abc'");
 DBHelper.Execute("exec sp_XXX");
 ```
 
-# 開発者向け
+# 開発者向け情報
 
 ## 開発環境
 
