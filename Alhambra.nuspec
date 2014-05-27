@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Alhambra</id>
-        <version>0.0.9</version>
+        <version>0.0.10</version>
         <title>Alhambra DBHelper</title>
         <authors>ledsun</authors>
         <licenseUrl>http://www.opensource.org/licenses/MIT</licenseUrl>
@@ -10,7 +10,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Alhambra helps open/close DB connections, mapping types between .Net and DB, making sql statement strings.</description>
         <summary>Alhambra is DBHelper, but Not O/R Mapper.</summary>
-        <releaseNotes>FixBug: A string format of the multi byte string is not match the ACCESS.</releaseNotes>
+        <releaseNotes>FixBug: Serach plugins from the executing directory.</releaseNotes>
         <dependencies>
             <dependency id="ObjectTypeConvertExtentions" version="0.0.5" />
         </dependencies>
