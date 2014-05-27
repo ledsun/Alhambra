@@ -15,6 +15,11 @@ namespace Alhambra.Db.Plugin
     internal static class PluginFactory
     {
         /// <summary>
+        /// プラグインを配置するディレクトリ名
+        /// </summary>
+        private const string PLUGINS_DIRECTORY_NMAE = "Plugins";
+
+        /// <summary>
         /// プラグインのカタログ
         /// </summary>
         private static AggregateCatalog _catalog = new AggregateCatalog();
@@ -26,7 +31,7 @@ namespace Alhambra.Db.Plugin
         {
             //自dllからプラグインの場所を取得
             string executionPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string pluginsPath = Path.Combine(executionPath, "Plugins");
+            string pluginsPath = Path.Combine(executionPath, PLUGINS_DIRECTORY_NMAE);
             if (!Directory.Exists(pluginsPath))
             {
                 Directory.CreateDirectory(pluginsPath);
@@ -37,7 +42,7 @@ namespace Alhambra.Db.Plugin
             //ASP.NETの場合dllのあるディレクトリをHttpRuntime.BinDirectoryから取得
             try
             {
-                _catalog.Catalogs.Add(new DirectoryCatalog(HttpRuntime.BinDirectory).FilterPlugin());
+                _catalog.Catalogs.Add(new DirectoryCatalog(Path.Combine(HttpRuntime.BinDirectory, PLUGINS_DIRECTORY_NMAE)).FilterPlugin());
             }
             catch (ArgumentNullException)
             {
