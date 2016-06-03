@@ -121,5 +121,5 @@ DBHelper.Execute("exec sp_XXX");
 
 ## 開発環境
 
-- Microsoft Visual Studio Professional 2013
-- Microsoft SQLServer Express 2012
+- Microsoft Visual Studio Community 2015
+- Microsoft SQLServer Express 2014
