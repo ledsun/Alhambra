@@ -62,7 +62,7 @@ int value =DBHelper.Select(
      SELECT
          VALE
      FROM EXAMPLE_TABLE
-     WHERE ID = @ID@
+     WHERE ID = @ID
      ")
   .Replace("ID", 100)
   )
@@ -73,7 +73,7 @@ int value =DBHelper.Select(
 SqlStatementクラスを使って作成します。
 
 1. コンストラクタでベースなるSQL文字列を設定
-1. `@keyword@`で置き換える文字を指定
+1. `@keyword`で置き換える文字を指定
 1. Replaceメソッドで置き換える
 
 メソッドチェーンでRepalceを連続して書くことができます。

@@ -334,7 +334,7 @@ namespace Alhambra.Db
         /// <returns></returns>
         private SqlStatement ReplaceByAtmark(string oldValue, string newValue)
         {
-            return new SqlStatement(_baseSql.Replace("@" + oldValue + "@", newValue));
+            return new SqlStatement(_baseSql.Replace("@" + oldValue, newValue));
         }
         #endregion
     }
