@@ -16,7 +16,7 @@ namespace Alhambra.Plugin.SqlServer
             return new SqlConnection();
         }
 
-        protected override IDbDataAdapter CreateAdapter(string sql, IDbConnection con)
+        public override IDbDataAdapter CreateAdapter(string sql, IDbConnection con)
         {
             return new SqlDataAdapter(sql, con as SqlConnection);
         }

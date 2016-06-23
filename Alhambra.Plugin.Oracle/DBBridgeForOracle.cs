@@ -16,7 +16,7 @@ namespace Alhambra.Plugin.Oracle
             return new OracleConnection();
         }
 
-        protected override IDbDataAdapter CreateAdapter(string sql, IDbConnection con)
+        public override IDbDataAdapter CreateAdapter(string sql, IDbConnection con)
         {
             return new OracleDataAdapter(sql, con as OracleConnection);
         }

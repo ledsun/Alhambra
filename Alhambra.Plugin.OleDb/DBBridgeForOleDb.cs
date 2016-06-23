@@ -17,7 +17,7 @@ namespace Alhambra.Plugin.OleDb
             return new OleDbConnection();
         }
 
-        protected override IDbDataAdapter CreateAdapter(string sql, IDbConnection con)
+        public override IDbDataAdapter CreateAdapter(string sql, IDbConnection con)
         {
             return new OleDbDataAdapter(sql, con as OleDbConnection);
         }

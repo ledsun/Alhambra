@@ -9,7 +9,7 @@ namespace Alhambra.Db.Helper
     /// <summary>
     /// IDbDataAdapterの拡張
     /// </summary>
-    static class DBAdapterExtentions
+    static class IDbAdapterExtensions
     {
         /// <summary>
         /// 取得したDataTable.RowsをIEnumerable{DataRowAccessor}に変換します

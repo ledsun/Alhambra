@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
 using Alhambra.ConfigUtil;
-using Alhambra.Db.Data;
-using Alhambra.Db.Helper;
 
 namespace Alhambra.Db.Plugin
 {
@@ -16,9 +13,17 @@ namespace Alhambra.Db.Plugin
         private const string SQL_SHOULD_NOT_NULL_OR_EMPTY = "SQLにヌルまたは空文字は指定できません。";
 
         private readonly int _timeout;
+        public int Timeout { get { return _timeout; } }
+
         private readonly IDbConnection _connection;
+        public IDbConnection Connection { get { return _connection; } }
+
         private IDbTransaction _trans = null;
+        public IDbTransaction Trans { get { return _trans; } }
+
         protected readonly IDbCommand _cmd;
+        public IDbCommand Cmd {  get { return _cmd; } }
+
         private bool _isNotTrasactionComplete = true;
 
         /// <summary>
@@ -33,7 +38,7 @@ namespace Alhambra.Db.Plugin
         /// <param name="sql"></param>
         /// <param name="con"></param>
         /// <returns></returns>
-        abstract protected IDbDataAdapter CreateAdapter(string sql, IDbConnection con);
+        abstract public IDbDataAdapter CreateAdapter(string sql, IDbConnection con);
 
         /// <summary>
         /// プラグイン名を返します。
@@ -73,76 +78,6 @@ namespace Alhambra.Db.Plugin
             _connection.Dispose();
         }
 
-        #region SQL実行
-        /// <summary>
-        /// 結果を返さないSQLを実行します
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        public int Execute(string sql)
-        {
-            if (String.IsNullOrEmpty(sql))
-                throw new ArgumentException(SQL_SHOULD_NOT_NULL_OR_EMPTY);
-
-            return PrepareCommand(sql).Execute();
-        }
-
-        /// <summary>
-        /// 値を一つ返すSQLを実行します
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        public TypeConvertableWrapper SelectOne(string sql)
-        {
-            if (String.IsNullOrEmpty(sql))
-                throw new ArgumentException(SQL_SHOULD_NOT_NULL_OR_EMPTY);
-
-            return PrepareCommand(sql).SelectOne();
-        }
-
-        /// <summary>
-        /// SELECTを実行します。
-        /// 結果はDataRowAccessorのリストで返します。
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        public IEnumerable<DataRowAccessor> Select(string sql)
-        {
-            if (String.IsNullOrEmpty(sql))
-                throw new ArgumentException(SQL_SHOULD_NOT_NULL_OR_EMPTY);
-
-            return PrepareDataAdapter(sql).SelectFromDataAdapter();
-        }
-
-        /// <summary>
-        /// SELECTを実行します。
-        /// 結果はDataSetで返します。
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        public DataSet SelectDataSet(string sql)
-        {
-            if (String.IsNullOrEmpty(sql))
-                throw new ArgumentException(SQL_SHOULD_NOT_NULL_OR_EMPTY);
-
-            return PrepareDataAdapter(sql).SelectDataSetFromDataAdapter();
-        }
-
-        /// <summary>
-        /// テーブルスキーマを取得します。
-        /// 結果はDataTableで返します。
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        public DataTable SelectTableSchema(string tableName)
-        {
-            if (String.IsNullOrEmpty(tableName))
-                throw new ArgumentException("テーブル名にヌルまたは空文字は指定できません。");
-
-            return PrepareDataAdapter(string.Format("SELECT * FROM {0};", tableName)).SelectTableSchema();
-        }
-        #endregion
-
         #region トランザクション操作
         /// <summary>
         /// トランザクション開始
@@ -171,24 +106,5 @@ namespace Alhambra.Db.Plugin
             _isNotTrasactionComplete = false;
         }
         #endregion
-
-        #region プライベートメソッド
-        private IDbCommand PrepareCommand(string sql)
-        {
-            _cmd.CommandText = sql;
-            _cmd.CommandTimeout = _timeout;
-            return _cmd;
-        }
-
-        private IDbDataAdapter PrepareDataAdapter(string sql)
-        {
-            var dataAdapter = CreateAdapter(sql, _connection);
-            dataAdapter.SelectCommand.CommandTimeout = _timeout;
-            dataAdapter.SelectCommand.Transaction = _trans;
-            return dataAdapter;
-        }
-        #endregion
-
-
     }
 }

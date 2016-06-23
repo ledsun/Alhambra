@@ -57,10 +57,11 @@
     <Compile Include="Db\Data\DataRowAccessor.cs" />
     <Compile Include="Db\Data\LinqList.cs" />
     <Compile Include="Db\Data\TypeConvertableWrapper.cs" />
-    <Compile Include="Db\Helper\DBAdapterExtentions.cs" />
+    <Compile Include="Db\Helper\AbstractDBBridgeExtensions.cs" />
+    <Compile Include="Db\Helper\IDbAdapterExtensions.cs" />
     <Compile Include="Db\Helper\DBHelper.cs" />
     <Compile Include="Db\Helper\DBTran.cs" />
-    <Compile Include="Db\Helper\DBCommandExtentions.cs" />
+    <Compile Include="Db\Helper\IDbCommandExtensions.cs" />
     <Compile Include="Db\Plugin\AbstractDBBridge.cs" />
     <Compile Include="Db\Plugin\ISqlDefinition.cs" />
     <Compile Include="Db\Plugin\PluginFactory.cs" />

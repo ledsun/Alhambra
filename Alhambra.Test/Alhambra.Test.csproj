@@ -78,9 +78,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Plugins\Alhambra.Plugin.SqlServer.dll">
+    <Content Include="Plugins\Alhambra.Plugin.SqlServer.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

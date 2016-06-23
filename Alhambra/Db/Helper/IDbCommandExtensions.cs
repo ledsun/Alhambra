@@ -9,7 +9,7 @@ namespace Alhambra.Db.Helper
     /// IDbCommand拡張
     /// 例外が発生した場合はメッセージに実行したSQLを追加します。
     /// </summary>
-    static class DBCommandExtentions
+    static class IDbCommandExtensions
     {
         /// <summary>
         /// SQLを実行します。

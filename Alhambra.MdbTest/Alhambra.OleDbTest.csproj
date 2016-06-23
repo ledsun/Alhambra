@@ -59,9 +59,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Plugins\Alhambra.Plugin.OleDb.dll">
+    <Content Include="Plugins\Alhambra.Plugin.OleDb.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <Content Include="test.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
