@@ -61,12 +61,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Alhambra\Alhambra.csproj">
-      <Project>{6E68E7D7-6859-4683-BC52-42220D9AE602}</Project>
-      <Name>Alhambra</Name>
+    <ProjectReference Include="..\Alhambra.Plugin\Alhambra.Plugin.csproj">
+      <Project>{40581227-bbbf-4bb7-9067-65f7d91210a8}</Project>
+      <Name>Alhambra.Plugin</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

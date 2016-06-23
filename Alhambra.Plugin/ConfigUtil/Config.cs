@@ -42,7 +42,7 @@ namespace Alhambra.Plugin.ConfigUtil
                 }
                 else
                 {
-                    throw new DBHelperException("configファイルのConnectionStringに" + name + "の接続文字列を指定して下さい。");
+                    throw new AlhambraPluginException("configファイルのConnectionStringに" + name + "の接続文字列を指定して下さい。");
                 }
             }
 
@@ -50,7 +50,7 @@ namespace Alhambra.Plugin.ConfigUtil
             /// SQL実行タイムアウトを設定します。
             /// 設定されてなければ30秒を使います。
             /// </summary>
-            internal int SqlCommandTimeout
+            public int SqlCommandTimeout
             {
                 get
                 {

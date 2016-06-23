@@ -1,6 +1,5 @@
 ﻿using System;
 using Alhambra.Db.Helper;
-using Alhambra.Db.Plugin;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Alhambra.Db;
 

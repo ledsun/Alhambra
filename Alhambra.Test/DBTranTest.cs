@@ -1,11 +1,9 @@
-﻿using System;
-using Alhambra.Db.Helper;
-using Alhambra.Db.Plugin;
+﻿using Alhambra.Db.Helper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlhambraTest
 {
-     /// <summary>
+    /// <summary>
     ///DBTranのテストクラスです。
     ///</summary>
     [TestClass()]
