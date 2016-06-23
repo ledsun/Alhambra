@@ -1,6 +1,6 @@
+using Alhambra.Plugin.ConfigUtil;
 using System;
 using System.Data;
-using Alhambra.ConfigUtil;
 
 namespace Alhambra.Db.Plugin
 {

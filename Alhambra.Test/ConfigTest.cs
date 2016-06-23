@@ -1,5 +1,4 @@
-﻿using System;
-using Alhambra.ConfigUtil;
+﻿using Alhambra.Plugin.ConfigUtil;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlhambraTest

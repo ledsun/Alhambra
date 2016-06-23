@@ -1,8 +1,7 @@
-﻿using System.ComponentModel.Composition;
+﻿using Alhambra.Db.Plugin;
+using Alhambra.Plugin.ConfigUtil;
+using System.ComponentModel.Composition;
 using System.Data;
-using System.Data.SqlClient;
-using Alhambra.ConfigUtil;
-using Alhambra.Db.Plugin;
 using System.Data.OleDb;
 
 namespace Alhambra.Plugin.OleDb

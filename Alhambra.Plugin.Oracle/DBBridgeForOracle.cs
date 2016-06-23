@@ -1,8 +1,8 @@
+using Alhambra.Db.Plugin;
+using Alhambra.Plugin.ConfigUtil;
+using Oracle.DataAccess.Client;
 using System.ComponentModel.Composition;
 using System.Data;
-using Alhambra.ConfigUtil;
-using Alhambra.Db.Plugin;
-using Oracle.DataAccess.Client;
 
 namespace Alhambra.Plugin.Oracle
 {

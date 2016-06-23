@@ -1,8 +1,8 @@
+using Alhambra.Db.Plugin;
+using Alhambra.Plugin.ConfigUtil;
 using System.ComponentModel.Composition;
 using System.Data;
 using System.Data.SqlClient;
-using Alhambra.ConfigUtil;
-using Alhambra.Db.Plugin;
 
 namespace Alhambra.Plugin.SqlServer
 {

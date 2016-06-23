@@ -1,4 +1,4 @@
-﻿using Alhambra.ConfigUtil;
+﻿using Alhambra.Plugin.ConfigUtil;
 using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
