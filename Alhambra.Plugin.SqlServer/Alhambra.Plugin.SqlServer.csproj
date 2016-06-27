@@ -66,6 +66,9 @@
       <Name>Alhambra.Plugin</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Install.ps1" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

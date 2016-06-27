@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Alhambra</id>
-        <version>0.0.11</version>
+        <version>0.0.13</version>
         <title>Alhambra DBHelper</title>
         <authors>ledsun</authors>
         <licenseUrl>http://www.opensource.org/licenses/MIT</licenseUrl>
@@ -18,6 +18,7 @@
     <files>
         <file src="Alhambra.Plugin.OleDb\bin\Release\Alhambra.Plugin.OleDb.dll" target="content\Plugins\Alhambra.Plugin.OleDb.dll" />
         <file src="Alhambra.Plugin.SqlServer\bin\Release\Alhambra.Plugin.SqlServer.dll" target="content\Plugins\Alhambra.Plugin.SqlServer.dll" />
+        <file src="Alhambra.Plugin\bin\Release\Alhambra.Plugin.dll" target="lib\Alhambra.Plugin.dll" />
         <file src="Alhambra\bin\Release\Alhambra.dll" target="lib\Alhambra.dll" />
     </files>
 </package>
